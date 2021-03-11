@@ -132,6 +132,13 @@ def import_data(data_path=DATA_FILE):
     menu_frame = pd.DataFrame(data=menus, columns=menu_columns)
     bhour_frame = pd.DataFrame(data=bhours, columns=bhours_columns)
 
+    user_frame = user_frame.drop_duplicates() # 중복된 값들 제거(유일한 값들만 가져옴)
+    user_frame = user_frame.reset_index() # dataframe 기본 인덱스 리셋
+    user_frame = user_frame.drop('index', axis=1) # dataframe 특정 columns 삭제, 이 경우 이전 index로 사용되던 columns 제거
+    user_frame.insert(1, 'password', 1234) # 특정 인덱스에 원하는 column 과 value 삽입(value는 동일한 값으로 통일되어 입력됨)
+
+    #print(user_frame)
+
     return {"stores": store_frame, "reviews": review_frame, "users": user_frame, "menus": menu_frame, "bhours" : bhour_frame}
 
 def dump_dataframes(dataframes):
@@ -141,16 +148,7 @@ def dump_dataframes(dataframes):
 def load_dataframes():
     return pd.read_pickle(DUMP_FILE)
 
-def main():
-
-    print("[*] Parsing data...")
-    data = import_data()
-    print("[+] Done")
-
-    print("[*] Dumping data...")
-    dump_dataframes(data)
-    print("[+] Done\n")
-
+def print_dataframes():
     data = load_dataframes()
 
     term_w = shutil.get_terminal_size()[0] - 1
@@ -159,27 +157,47 @@ def main():
     print("[음식점]")
     print(f"{separater}\n")
     print(data["stores"].head())
+    print(str(data["stores"].shape[0]) + " rows * " + str(data["stores"].shape[1]) + " cols dataframe")
+    # df.shape[0] => dataframe의 row 개수 / df.shape[1] => dataframe의 col 개수
     print(f"\n{separater}\n\n")
 
     print("[리뷰]")
     print(f"{separater}\n")
     print(data["reviews"].head())
+    print(str(data["reviews"].shape[0]) + " rows * " + str(data["reviews"].shape[1]) + " cols dataframe")
     print(f"\n{separater}\n\n")
 
     print("[리뷰작성자]")
     print(f"{separater}\n")
     print(data["users"].head())
+    print(str(data["users"].shape[0]) + " rows * " + str(data["users"].shape[1]) + " cols dataframe")
     print(f"\n{separater}\n\n")
 
     print("[메뉴]")
     print(f"{separater}\n")
     print(data["menus"].head())
+    print(str(data["menus"].shape[0]) + " rows * " + str(data["menus"].shape[1]) + " cols dataframe")
     print(f"\n{separater}\n\n")
 
     print("[영업시간]")
     print(f"{separater}\n")
     print(data["bhours"].head())
+    print(str(data["bhours"].shape[0]) + " rows * " + str(data["bhours"].shape[1]) + " cols dataframe")
     print(f"\n{separater}\n\n")
+
+def main():
+
+    # print("[*] Parsing data...")
+    # data = import_data() # data.json의 데이터를 파싱하여 dataframe으로 변환
+    # print("[+] Done")
+    #
+    # print("[*] Dumping data...")
+    # dump_dataframes(data) # dataframe으로 만든 데이터를 .pkl 확장자로 저장
+    # print("[+] Done\n")
+    #
+    # data = load_dataframes() # .pkl로 저장된 파싱된 데이터를 불러옴
+
+    print_dataframes() # 데이터 확인을 하기위한 print 함수
 
 
 if __name__ == "__main__":
