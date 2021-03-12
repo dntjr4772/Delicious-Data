@@ -2,13 +2,15 @@ import json
 import pandas as pd
 import os
 import shutil
+import sys
+import numpy as np
 
 DATA_DIR = "../data"
 DATA_FILE = os.path.join(DATA_DIR, "data.json")
 DUMP_FILE = os.path.join(DATA_DIR, "dump.pkl")
 
 store_columns = (
-    "id",  # 음식점 고유번호
+    "id",  # 음식점 고유번호 / primary key
     "store_name",  # 음식점 이름
     "branch",  # 음식점 지점 여부
     "area",  # 음식점 위치
@@ -17,32 +19,33 @@ store_columns = (
     "latitude",  # 음식점 위도
     "longitude",  # 음식점 경도
     "category",  # 음식점 카테고리
-    "review_cnt", # 리뷰 갯수
+    "image", # 가게 이미지 크롤링한 url
 )
 
 review_columns = (
-    "id",  # 리뷰 고유번호
-    "store",  # 음식점 고유번호
-    "user",  # 유저 고유번호
+    "store",  # 음식점 고유번호 / 외래키 (store의 primary key)
+    "user",  # 유저 고유번호   / 외래키 (user의 primary key)
     "score",  # 평점
     "content",  # 리뷰 내용
     "reg_time",  # 리뷰 등록 시간
 )
 
 user_columns = (
-    "id",       # 유저 아이디
+    "id",       # 유저 아이디 / primary key
+    "email",    # 유저 이메일 / ${id}@abcd.com
+    "nickname", # 유저 닉네임 / 익명${id}
     "gender",   # 유저 성별
     "born_year", # 유저 태어난 해
 )
 
 menu_columns = (
-    "store",    # 판매하는 가게 아이디
+    "store",    # 판매하는 가게 아이디 / 외래키 (store의 primary key)
     "menu_name", # 메뉴 이름
     "price",    # 메뉴 가격
 )
 
 bhours_columns = (
-    "store", # 음식점 고유 번호
+    "store", # 음식점 고유 번호 / 외래키 (store의 primary key)
     "type", # 영업시간 종류 / 1 : 영업시간, 2 : 쉬는시간, 3 : 휴무일
     "week_type", # 주단위 종류 / 1 : 매주, 2 : 첫째주, 3 : 둘째주, 4: 셋째주, 5 : 넷째주, 6 : 공휴일
     "mon", # 월요일 포함유무 / 1 : 포함, 2 : 미포함
@@ -86,7 +89,7 @@ def import_data(data_path=DATA_FILE):
                 d["latitude"],
                 d["longitude"],
                 "|".join(categories),
-                d["review_cnt"],
+                "",
             ]
         )
 
@@ -95,11 +98,14 @@ def import_data(data_path=DATA_FILE):
             u = review["writer_info"]
 
             reviews.append(
-                [r["id"], d["id"], u["id"], r["score"], r["content"], r["reg_time"]]
+                [d["id"], u["id"], r["score"], r["content"], r["reg_time"]]
             )
 
+            user_email = str(u["id"]) + "@abcd.com"
+            user_nickname = "익명" + str(u["id"])
+
             users.append(
-                [u["id"], u["gender"], u["born_year"]]
+                [u["id"], user_email, user_nickname, u["gender"], u["born_year"]]
             )
 
         for menu in d["menu_list"]:
@@ -135,9 +141,6 @@ def import_data(data_path=DATA_FILE):
     user_frame = user_frame.drop_duplicates() # 중복된 값들 제거(유일한 값들만 가져옴)
     user_frame = user_frame.reset_index() # dataframe 기본 인덱스 리셋
     user_frame = user_frame.drop('index', axis=1) # dataframe 특정 columns 삭제, 이 경우 이전 index로 사용되던 columns 제거
-    user_frame.insert(1, 'password', 1234) # 특정 인덱스에 원하는 column 과 value 삽입(value는 동일한 값으로 통일되어 입력됨)
-
-    #print(user_frame)
 
     return {"stores": store_frame, "reviews": review_frame, "users": user_frame, "menus": menu_frame, "bhours" : bhour_frame}
 
@@ -185,19 +188,86 @@ def print_dataframes():
     print(str(data["bhours"].shape[0]) + " rows * " + str(data["bhours"].shape[1]) + " cols dataframe")
     print(f"\n{separater}\n\n")
 
+def check_dataframes_info():
+    data = load_dataframes()
+
+    term_w = shutil.get_terminal_size()[0] - 1
+    separater = "-" * term_w
+
+    stores = data["stores"]
+    reviews = data["reviews"]
+    users = data["users"]
+    menus = data["menus"]
+    bhours = data["bhours"]
+
+    stores.replace('', np.nan, inplace=True)
+    print("stores dataframe null check")
+    print(f"{separater}\n")
+    print(stores.isnull().sum())
+    print(f"{separater}\n\n")
+
+    reviews.replace('', np.nan, inplace=True)
+    reviews.replace('1970-01-01 00:00:00', np.nan, inplace=True)
+    print("reviews dataframe null check")
+    print(f"{separater}\n")
+    print(reviews.isnull().sum())
+    print(f"{separater}\n\n")
+
+    users.replace('', np.nan, inplace=True)
+    users.replace(0, np.nan, inplace=True)
+    print("users dataframe null check")
+    print(f"{separater}\n")
+    print(users.isnull().sum())
+    print(f"{separater}\n\n")
+
+    menus.replace('', np.nan, inplace=True)
+    menus.replace(0, np.nan, inplace=True)
+    print("menus dataframe null check")
+    print(f"{separater}\n")
+    print(menus.isnull().sum())
+    print(f"{separater}\n\n")
+
+    bhours.replace('', np.nan, inplace=True)
+    print("bhours dataframe null check")
+    print(f"{separater}\n")
+    print(bhours.isnull().sum())
+    print(f"{separater}\n\n")
+
+
+
 def main():
+    length = len(sys.argv)
 
-    # print("[*] Parsing data...")
-    # data = import_data() # data.json의 데이터를 파싱하여 dataframe으로 변환
-    # print("[+] Done")
-    #
-    # print("[*] Dumping data...")
-    # dump_dataframes(data) # dataframe으로 만든 데이터를 .pkl 확장자로 저장
-    # print("[+] Done\n")
-    #
-    # data = load_dataframes() # .pkl로 저장된 파싱된 데이터를 불러옴
+    if length == 2 :
+        command = sys.argv[1]
+        if command == "dump" :
+            print("[*] Parsing data...")
+            data = import_data() # data.json의 데이터를 파싱하여 dataframe으로 변환
+            print("[+] Done")
 
-    print_dataframes() # 데이터 확인을 하기위한 print 함수
+            print("[*] Dumping data...")
+            dump_dataframes(data) # dataframe으로 만든 데이터를 .pkl 확장자로 저장
+            print("[+] Done\n")
+        elif command == "print" :
+            print("[*] Print data...")
+            print_dataframes()  # 데이터 확인을 하기위한 print 함수
+            print("[+] Done\n")
+        elif command == "check" :
+            print("[*] Check data...")
+            check_dataframes_info()  # 데이터 확인을 하기위한 print 함수
+            print("[+] Done\n")
+        else :
+            print("usage : python parser.py [command]")
+            print("command")
+            print(">> dump : parsing data.json and make dump.pkl with parsing data")
+            print(">> print : load dump.pkl and print data")
+            print(">> check : check null or empty string value of data")
+    else :
+        print("usage : python parser.py [command]")
+        print("command")
+        print(">> dump : parsing data.json and make dump.pkl with parsing data")
+        print(">> print : load dump.pkl and print data")
+        print(">> check : check null or empty string value of data")
 
 
 if __name__ == "__main__":
