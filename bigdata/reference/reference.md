@@ -78,6 +78,7 @@ elem.send_keys(Keys.RETURN)
 # 값을 못가져 오는데 왜 못찾는지 이유를 모르겠음,,,,,.,.,,,,
 print(driver.find_elements_by_css_selector("._image._listImage"))
 
+# xpath 로 하는 방법도 안되는데 이유를 모르겠다...! 주말에 해결하기!
 driver.find_elements_by_css_selector("._image._listImage")[0].click()
 time.sleep(2)
 imgURL = driver.find_element_by_css_selector("._image").get_attribute("src")
