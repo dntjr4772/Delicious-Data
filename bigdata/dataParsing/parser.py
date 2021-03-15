@@ -23,8 +23,8 @@ store_columns = (
 )
 
 review_columns = (
-    "store",  # 음식점 고유번호 / 외래키 (store의 primary key)
-    "user",  # 유저 고유번호   / 외래키 (user의 primary key)
+    "store_id",  # 음식점 고유번호 / 외래키 (store의 primary key)
+    "user_id",  # 유저 고유번호   / 외래키 (user의 primary key)
     "score",  # 평점
     "content",  # 리뷰 내용
     "reg_time",  # 리뷰 등록 시간
@@ -39,13 +39,13 @@ user_columns = (
 )
 
 menu_columns = (
-    "store",    # 판매하는 가게 아이디 / 외래키 (store의 primary key)
+    "store_id",    # 판매하는 가게 아이디 / 외래키 (store의 primary key)
     "menu_name", # 메뉴 이름
     "price",    # 메뉴 가격
 )
 
 bhours_columns = (
-    "store", # 음식점 고유 번호 / 외래키 (store의 primary key)
+    "store_id", # 음식점 고유 번호 / 외래키 (store의 primary key)
     "type", # 영업시간 종류 / 1 : 영업시간, 2 : 쉬는시간, 3 : 휴무일
     "week_type", # 주단위 종류 / 1 : 매주, 2 : 첫째주, 3 : 둘째주, 4: 셋째주, 5 : 넷째주, 6 : 공휴일
     "mon", # 월요일 포함유무 / 1 : 포함, 2 : 미포함
@@ -141,6 +141,11 @@ def import_data(data_path=DATA_FILE):
     user_frame = user_frame.drop_duplicates() # 중복된 값들 제거(유일한 값들만 가져옴)
     user_frame = user_frame.reset_index() # dataframe 기본 인덱스 리셋
     user_frame = user_frame.drop('index', axis=1) # dataframe 특정 columns 삭제, 이 경우 이전 index로 사용되던 columns 제거
+
+    # reviews, menus, bhours에 index를 사용하여 id column으로 추가
+    review_frame.insert(0, "id", review_frame.index + 1)
+    menu_frame.insert(0, "id", menu_frame.index + 1)
+    bhour_frame.insert(0, "id", bhour_frame.index + 1)
 
     return {"stores": store_frame, "reviews": review_frame, "users": user_frame, "menus": menu_frame, "bhours" : bhour_frame}
 
