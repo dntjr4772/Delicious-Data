@@ -88,3 +88,16 @@ urllib.request.urlretrieve(imgURL, "test.jpg")
 # driver.close()
 ```
 
+download naver img by beautifulsoup 
+```
+from bs4 import BeautifulSoup
+import requests
+
+webpage = requests.get('https://search.naver.com/search.naver?where=image&sm=tab_jum&query=' + '앗싸곱창 방학동')
+bs = BeautifulSoup(webpage.content, "html.parser")
+
+
+divs = bs.select(" div img")[0]
+
+print(divs)
+```
