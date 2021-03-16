@@ -19,4 +19,19 @@ public class User {
     private int bornYear;
     @OneToOne(mappedBy = "user")
     Review review;
+    //인증
+    @Builder.Default
+    private String authKey ="";
+    //임시 고객
+    @Builder.Default
+    @Enumerated(EnumType.STRING)
+    private Role role = Role.TEMPORARY;
+
+    public void changeAuthKey(String authKey){
+        this.authKey =authKey;
+    }
+
+    public void changeRole(Role role){
+        this.role=role;
+    }
 }
