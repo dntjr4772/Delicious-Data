@@ -20,6 +20,16 @@ DB 마이그레이션 (1)
 
 - 내용
 
+  ​	콘텐츠 기반 필터링은 항목 자체를 분석해 추천합니다. 음악을 추천하기 위해서는 음악 자체를 분석하고, 상품이라면 상품 설명을 분석해 유사한 항목을 추천하는 것이죠.
+
+  → 우리 프로젝트에서 맛집 추천을 위해서는 판매 음식, 맛, 거리, 가격 등의 가게 데이터 분석 필요
+
+  이를 위해서는 항목 분석 데이터와 사용자 선호도 분석한 데이터 간의 유사성을 계산해야 합니다. 
+
+  콘텐츠의 내용을 분석해야 하는 콘텐츠 기반 필터링은 아이템 분석 알고리즘이 필수이며, 이를 위해 군집분석(clustering analysis), 인공신경망(artificial neural network), tf-idf(term frequency-inverse document frequency) 등의 기술이 사용됩니다.
+
+  콘텐츠 기반 필터링의 장점은 많은 양의 사용자 행동 정보가 필요하지 않기 때문에 콜드 스타트 문제(새로운 항목 등록 등으로 인하여 초기 정보가 없어 추천을 해줄 수 없는 문제)가 발생하지 않지만, 다양한 형식의 항목을 추천하기 어려운 단점이 있습니다.
+
 TF-IDF  (지희)
 
 - 내용
@@ -27,6 +37,14 @@ TF-IDF  (지희)
   - 키워드 추출 알고리즘 종류들
 
   https://medium.com/@Aaron__Kim/단어-word-의-중요도를-측정하는-알고리즘-text-mining-tf-idf-rake-n-gram-86d9ef10873e
+  
+  
+  
+  TF-IDF (Term Frequency — Inverse Document Frequency)
+  
+  RAKE (Rapid Automatic Keyword Extraction)  - 두 단어 동시 중요도를 계산에 용이
+  
+  n-gram
 
 협업필터링 (용석)
 
