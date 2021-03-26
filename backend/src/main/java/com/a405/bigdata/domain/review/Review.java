@@ -28,6 +28,6 @@ public class Review {
     private Date regTime;
     @ManyToOne
     private Store store;
-    @OneToOne
+    @ManyToOne
     private User user;
 }

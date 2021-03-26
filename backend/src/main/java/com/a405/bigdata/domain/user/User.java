@@ -4,6 +4,8 @@ import com.a405.bigdata.domain.review.Review;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -17,8 +19,12 @@ public class User {
     private String nickname;
     private char gender;
     private int bornYear;
-    @OneToOne(mappedBy = "user")
-    Review review;
+//    @OneToOne(mappedBy = "user")
+//    Review review;
+    @Builder.Default
+    @OneToMany(mappedBy = "user")
+    private List<Review> reviews=new ArrayList<>();
+
     //인증
     @Builder.Default
     private String authKey ="";
