@@ -101,38 +101,43 @@ divs = bs.select(" div img")[0]
 print(divs)
 ```
 
+TF-IDF 이해하기!!!
+
 ```
-from selenium import webdriver
-from selenium.webdriver.common.keys import Keys
-# 기다리기
-import time
-import urllib.request
+import pandas as pd # 데이터프레임 사용을 위해
+from math import log # IDF 계산을 위해
 
-driver = webdriver.Chrome()
-driver.get("https://search.naver.com/search.naver?where=nexearch&sm=top_hty&fbm=1&ie=utf8&query=")
-elem = driver.find_element_by_name("query")
-# 키보드 입력값
-# elem.send_keys("앗싸곱창 방학동")
-# elem.send_keys("앗싸곱창 금오점")
-elem.send_keys("(주)호미 약대동")
-elem.send_keys(Keys.RETURN)
+docs = [
+  '먹고 싶은 사과',
+  '먹고 싶은 바나나',
+  '길고 노란 바나나 바나나',
+  '저는 과일이 좋아요'
+] 
+vocab = list(set(w for doc in docs for w in doc.split()))
+vocab.sort()
 
+N = len(docs) # 총 문서의 수
 
-# driver.find_elements_by_css_selector("._image._listImage")[0].click()
-time.sleep(2)
-mapHref = driver.find_element_by_css_selector("._1RlVL").get_attribute("href")
-print(mapHref)
-driver.get(mapHref)
+def tf(t, d):
+    return d.count(t)
 
-# style에서
-# background-image:url
-# (https://search.pstatic.net/common/?autoRotate=true&quality=95&type=w750&src=http%3A%2F%2Fapis.naver.com%2Fplace%2Fpanorama%2Fthumbnail%2F38403953%2F0%3Fwidth%3D800%26height%3D400%26msgpad%3D1616424507021%26md%3DhPnAYucigl22m8i0oGZppoR1X74%253D)
-# 잘라오기
+def idf(t):
+    df = 0
+    for doc in docs:
+        df += t in doc
+    return log(N/(df + 1))
 
-imgUrl = driver.find_element_by_css_selector(".cb7hz.undefined")
-print(imgUrl)
+def tfidf(t, d):
+    return tf(t,d)* idf(t)
 
+result = []
+for i in range(N): # 각 문서에 대해서 아래 명령을 수행
+    result.append([])
+    d = docs[i]
+    for j in range(len(vocab)):
+        t = vocab[j]        
+        result[-1].append(tf(t, d))
 
-# driver.close()
+tf_ = pd.DataFrame(result, columns = vocab)
+tf_
 ```
-
