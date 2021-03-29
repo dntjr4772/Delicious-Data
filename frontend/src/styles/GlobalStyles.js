@@ -3,11 +3,17 @@ import reset from "styled-reset";
 
 export default createGlobalStyle`
   ${reset}
-  @import url('https://fonts.googleapis.com/css?family=Open+Sans:400,600,700&display=swap');
+  @font-face {
+    font-family: "HangeulNuri-Bold";
+    src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_three@1.0/HangeulNuri-Bold.woff")
+      format("woff");
+    font-weight: normal;
+    font-style: normal;
+  }
 
   body {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
-      Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+    font-family: "HangeulNuri-Bold", sans-serif;
+    font-weight: normal;
   }
 
   a {
