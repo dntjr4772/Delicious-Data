@@ -16,7 +16,7 @@ public class UserControllerTest extends BaseControllerTest {
         //Given
         char gender = '남';
         int bornYear=1995;
-        String email="dntjr4772@nate.com";
+        String email = "test@naver.com";
         String nickname="dd우석";
         //When
         UserDto.CreateAccountRequest createAccountRequest = UserDto.CreateAccountRequest.builder()
@@ -31,7 +31,6 @@ public class UserControllerTest extends BaseControllerTest {
                 .content(objectMapper.writeValueAsString(createAccountRequest)))
                 .andExpect(status().isCreated())
                 .andDo(print());
-
     }
 
 }

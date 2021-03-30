@@ -14,7 +14,7 @@ public class SearchControllerTest extends BaseControllerTest {
     @Test
     public void Search_동작_성공() throws Exception {
         //When
-        String storeName="해녀촌식당";
+        String storeName="1.5닭갈비";
 
         mockMvc.perform(get("/api/search/logout/"+storeName)
                 .contentType(MediaType.APPLICATION_JSON))

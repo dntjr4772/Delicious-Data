@@ -1,7 +1,12 @@
 package com.a405.bigdata.domain.menu;
 
+import com.a405.bigdata.domain.store.Store;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import javax.persistence.ManyToOne;
 
 public class MenuDto {
     @Data
@@ -18,5 +23,14 @@ public class MenuDto {
                     .price(this.price)
                     .build();
         }
+    }
+
+    @Data
+    @NoArgsConstructor
+    @AllArgsConstructor
+    @Builder
+    public static class ResponseMenu{
+        private String menuName;
+        private int price;
     }
 }

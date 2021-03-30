@@ -19,8 +19,6 @@ public class User {
     private String nickname;
     private char gender;
     private int bornYear;
-//    @OneToOne(mappedBy = "user")
-//    Review review;
     @Builder.Default
     @OneToMany(mappedBy = "user")
     private List<Review> reviews=new ArrayList<>();

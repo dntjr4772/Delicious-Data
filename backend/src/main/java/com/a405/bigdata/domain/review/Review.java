@@ -20,7 +20,9 @@ public class Review {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private int score;
+    private int taste;
+    private int clean;
+    private int service;
     @Column(columnDefinition = "TEXT")
     private String content;
     private String reviewImage;
