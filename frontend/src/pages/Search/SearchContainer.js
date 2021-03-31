@@ -1,7 +1,8 @@
 import React, { useEffect } from "react";
 import styled from "styled-components";
-import SearchTestBox from "./components/ResultBox";
+import RecommendBox from "./components/RecommendBox";
 import ScrollContainer from "react-indiana-drag-scroll";
+import recommendData from "../../utils/data/recommendData";
 
 const Wrapper = styled.div`
   height: 100vh;
@@ -23,16 +24,19 @@ const InnerCol = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  height: 2800px;
+  height: 2900px;
 `;
 
 const InnerRow = styled.div`
   display: flex;
   justify-content: space-between;
-  width: 2800px;
+  width: 2900px;
 `;
 
 const Search = () => {
+  const data = recommendData;
+  console.log(data);
+
   useEffect(() => {
     let scroll_container = document.getElementById("container").parentElement;
     scroll_container.scrollTo(500, 500);
@@ -48,32 +52,46 @@ const Search = () => {
           <Inner id="container">
             <InnerCol>
               <InnerRow>
-                <SearchTestBox></SearchTestBox>
-                <SearchTestBox></SearchTestBox>
-                <SearchTestBox></SearchTestBox>
-                <SearchTestBox></SearchTestBox>
-                <SearchTestBox></SearchTestBox>
+                <RecommendBox></RecommendBox>
+                <RecommendBox></RecommendBox>
+                <RecommendBox></RecommendBox>
+                <RecommendBox></RecommendBox>
+                <RecommendBox></RecommendBox>
               </InnerRow>
               <InnerRow>
-                <SearchTestBox></SearchTestBox>
-                <SearchTestBox></SearchTestBox>
-                <SearchTestBox></SearchTestBox>
-                <SearchTestBox></SearchTestBox>
-                <SearchTestBox></SearchTestBox>
+                <RecommendBox></RecommendBox>
+                <RecommendBox></RecommendBox>
+                <RecommendBox></RecommendBox>
+                <RecommendBox></RecommendBox>
+                <RecommendBox></RecommendBox>
               </InnerRow>
               <InnerRow>
-                <SearchTestBox></SearchTestBox>
-                <SearchTestBox></SearchTestBox>
-                <SearchTestBox></SearchTestBox>
-                <SearchTestBox></SearchTestBox>
-                <SearchTestBox></SearchTestBox>
+                <RecommendBox></RecommendBox>
+                <RecommendBox></RecommendBox>
+                <RecommendBox></RecommendBox>
+                <RecommendBox></RecommendBox>
+                <RecommendBox></RecommendBox>
               </InnerRow>
               <InnerRow>
-                <SearchTestBox></SearchTestBox>
-                <SearchTestBox></SearchTestBox>
-                <SearchTestBox></SearchTestBox>
-                <SearchTestBox></SearchTestBox>
-                <SearchTestBox></SearchTestBox>
+                <RecommendBox></RecommendBox>
+                <RecommendBox></RecommendBox>
+                <RecommendBox></RecommendBox>
+                <RecommendBox></RecommendBox>
+                <RecommendBox></RecommendBox>
+              </InnerRow>
+              <InnerRow>
+                <RecommendBox></RecommendBox>
+                <RecommendBox></RecommendBox>
+                <RecommendBox></RecommendBox>
+                <RecommendBox></RecommendBox>
+                <RecommendBox></RecommendBox>
+              </InnerRow>
+              <InnerRow>
+                <RecommendBox></RecommendBox>
+                <RecommendBox></RecommendBox>
+                <RecommendBox></RecommendBox>
+                <RecommendBox></RecommendBox>
+                <RecommendBox></RecommendBox>
               </InnerRow>
             </InnerCol>
           </Inner>
