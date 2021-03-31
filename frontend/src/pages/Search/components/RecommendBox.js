@@ -1,4 +1,5 @@
 import React from "react";
+import { connect } from "react-redux";
 import styled from "styled-components";
 import FoodExample from "../../../assets/icons/food_example.png";
 
@@ -169,9 +170,22 @@ const PhotoBox = styled.div`
   border-radius: 6px;
 `;
 
-const RecommendBox = () => {
+let RecommendBox = ({ dataIndex, data, dispatch }) => {
+  const { store_name, category } = data;
+
+  let rank = "";
+  if (dataIndex <= 8) {
+    rank = "0" + (dataIndex + 1);
+  } else {
+    rank = dataIndex + 1;
+  }
+
+  const onClickHandler = () => {
+    dispatch({ type: "TOGGLE_POPUP_BOX", dataIndex });
+  };
+
   return (
-    <Wrapper>
+    <Wrapper onClick={onClickHandler}>
       <TopDiv>
         <TopBox>
           <TopHead>
@@ -181,7 +195,7 @@ const RecommendBox = () => {
               </CategoryBox>
               <RankBox>
                 <RankTop>추천</RankTop>
-                <RankBottom>01</RankBottom>
+                <RankBottom>{rank}</RankBottom>
               </RankBox>
             </HeadLeft>
             <HeadRight>
@@ -192,8 +206,8 @@ const RecommendBox = () => {
             </HeadRight>
           </TopHead>
           <TopInfo>
-            <TopTitle>해녀촌식당 안덕면</TopTitle>
-            <TopDesc>회국수</TopDesc>
+            <TopTitle>{store_name}</TopTitle>
+            <TopDesc>{category}</TopDesc>
           </TopInfo>
         </TopBox>
       </TopDiv>
@@ -205,5 +219,7 @@ const RecommendBox = () => {
     </Wrapper>
   );
 };
+
+RecommendBox = connect()(RecommendBox);
 
 export default RecommendBox;
