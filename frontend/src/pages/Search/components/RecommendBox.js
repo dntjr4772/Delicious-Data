@@ -169,7 +169,7 @@ const PhotoBox = styled.div`
   border-radius: 6px;
 `;
 
-const ResultBox = () => {
+const RecommendBox = () => {
   return (
     <Wrapper>
       <TopDiv>
@@ -206,4 +206,4 @@ const ResultBox = () => {
   );
 };
 
-export default ResultBox;
+export default RecommendBox;
