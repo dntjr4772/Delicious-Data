@@ -9,4 +9,4 @@ const data = {
   branch: null,
 };
 
-export default { data };
+export default data;

@@ -2,8 +2,10 @@ import React from "react";
 import { connect } from "react-redux";
 import styled from "styled-components";
 import FoodExample from "../../../assets/icons/food_example.png";
+import pos from "../../../utils/recommendPosition";
 
 const Wrapper = styled.div`
+  position: absolute;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -14,9 +16,18 @@ const Wrapper = styled.div`
   border-radius: 20px;
   cursor: pointer;
   :hover {
-    transform: scale(1.02);
+    transform: translate(
+        ${(props) => pos[props.dataIndex].x}px,
+        ${(props) => pos[props.dataIndex].y}px
+      )
+      scale(1.02);
   }
   user-select: none;
+
+  transform: translate(
+    ${(props) => pos[props.dataIndex].x}px,
+    ${(props) => pos[props.dataIndex].y}px
+  );
 `;
 
 const TopDiv = styled.div`
@@ -185,7 +196,7 @@ let RecommendBox = ({ dataIndex, data, dispatch }) => {
   };
 
   return (
-    <Wrapper onClick={onClickHandler}>
+    <Wrapper dataIndex={dataIndex} onClick={onClickHandler}>
       <TopDiv>
         <TopBox>
           <TopHead>
