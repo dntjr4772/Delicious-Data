@@ -175,14 +175,14 @@ const PhotoDiv = styled.div`
 const PhotoBox = styled.div`
   width: 430px;
   height: 200px;
-  background-image: url("https://search.pstatic.net/common/?autoRotate=true&quality=95&type=w750&src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMDEyMjlfMjgx%2FMDAxNjA5MjI0MDc1NzYw.Sn9cRzv5kPxf-QEoE2jCl90FfSvR2AFsvOM68Ankxb8g.Hgv6ba6d7pf7rRpiVmDHi3xqe19wIOy1Xs9gtUC7_Gog.JPEG.naxkarma%2F092.JPG");
+  background-image: url(${(props) => props.image});
   background-size: cover;
   background-position: center;
   border-radius: 6px;
 `;
 
 let RecommendBox = ({ dataIndex, data, dispatch }) => {
-  const { store_name, category } = data;
+  const { store_name, category, image } = data;
 
   let rank = "";
   if (dataIndex <= 8) {
@@ -224,7 +224,7 @@ let RecommendBox = ({ dataIndex, data, dispatch }) => {
       </TopDiv>
       <BottomDiv>
         <PhotoDiv>
-          <PhotoBox></PhotoBox>
+          <PhotoBox image={image}></PhotoBox>
         </PhotoDiv>
       </BottomDiv>
     </Wrapper>
