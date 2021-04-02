@@ -23,7 +23,7 @@ cur.close()
 conn.close()
 ```
 
-pickle 읽어오기
+pickle 파일 읽어오기
 
 ```
 import pickle 
