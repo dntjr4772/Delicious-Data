@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import styled, { css, keyframes } from "styled-components";
+import close_1 from "../../../assets/icons/close_1.png";
 
 const Wrapper = styled.div`
   z-index: 10;
@@ -88,7 +89,7 @@ const TitleBox = styled.div`
   font-size: 32px;
 `;
 
-const ImageBox = styled.div`
+const PhotoDiv = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -144,6 +145,9 @@ const DetailButtonBox = styled.div`
 
 const XButtonBox = styled.div`
   position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   top: -25px;
   right: -40px;
   z-index: 30;
@@ -159,6 +163,14 @@ const XButtonBox = styled.div`
     background-color: #eaeaea;
   }
   cursor: pointer;
+`;
+
+const XButtonIcon = styled.div`
+  width: 20px;
+  height: 20px;
+  background-image: url(${(props) => props.image});
+  background-size: contain;
+  background-position: center;
 `;
 
 let PopupBox = ({ data, dispatch }) => {
@@ -183,16 +195,18 @@ let PopupBox = ({ data, dispatch }) => {
       <Inner isClick={isClick}>
         <TopDiv>
           <TitleBox>{store_name}</TitleBox>
-          <ImageBox>
+          <PhotoDiv>
             <PhotoBox image={image}></PhotoBox>
-          </ImageBox>
+          </PhotoDiv>
           <AddressBox>{address}</AddressBox>
-          <TelBox>{tel}</TelBox>
+          <TelBox>TEL : {tel}</TelBox>
         </TopDiv>
         <BottomDiv>
           <DetailButtonBox>자세히보기</DetailButtonBox>
         </BottomDiv>
-        <XButtonBox onClick={onClickHandler}></XButtonBox>
+        <XButtonBox onClick={onClickHandler}>
+          <XButtonIcon image={close_1}></XButtonIcon>
+        </XButtonBox>
       </Inner>
       <CloseBgDiv onClick={onClickHandler}></CloseBgDiv>
     </Wrapper>
