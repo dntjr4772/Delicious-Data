@@ -49,6 +49,23 @@ public class StoreDto {
     @NoArgsConstructor
     @AllArgsConstructor
     @Builder
+    public static class StoreWithDistance
+    {
+        private Long id;
+        private String storeName;
+        private String branch;
+        private String area;
+        private String tel;
+        private String address;
+        private String category;
+        private String storeImage;
+        private double distance;
+    }
+
+    @Data
+    @NoArgsConstructor
+    @AllArgsConstructor
+    @Builder
     public static class StoreInfoResponse
     {
         private Long id;

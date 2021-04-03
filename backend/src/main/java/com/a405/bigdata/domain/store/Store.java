@@ -33,7 +33,10 @@ public class Store {
     private String category;
     @OneToMany(mappedBy = "store")
     private List<Bhours> bhours;
-
+    private Double tasteAvg;
+    private Double cleanAvg;
+    private Double serviceAvg;
+    private int review_cnt;
     @Builder.Default
     @OneToMany(mappedBy = "store")
     private List<Menu> menus=new ArrayList<>();
