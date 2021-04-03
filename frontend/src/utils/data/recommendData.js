@@ -5,7 +5,8 @@ const data = [
     area: "이태원",
     tel: "02-749-6867",
     category: "피쉬앤칩스|펍",
-    image: "",
+    image:
+      "https://upload.wikimedia.org/wikipedia/commons/6/6c/TillysTavernFish.JPG",
     address: "서울특별시 용산구 이태원동 118-9",
     branch: null,
   },
@@ -15,7 +16,8 @@ const data = [
     area: "이태원",
     tel: "070-7789-0717",
     category: "곱창|대창",
-    image: "",
+    image:
+      "http://th2.tmon.kr/thumbs/image/46b/303/d46/fe4e3add6_700x700_95_FIT.jpg",
     address: "서울특별시 용산구 이태원동 119-18 좁은사이길 2층",
     branch: "",
   },
@@ -25,7 +27,8 @@ const data = [
     area: "이태원",
     tel: "02-797-9877",
     category: "족발",
-    image: "",
+    image:
+      "https://post-phinf.pstatic.net/MjAxOTA3MTVfMTc5/MDAxNTYzMTgwMzQ3ODE5.L8a639GNF86TujJ7Wm7B25AMPP4shnnAJwzMyvIpuUAg.EwOHiJ_VZKFSCMMqMYKZ-e2vagzrn8S3mlqXhAeCuNkg.JPEG/%ED%97%88%EB%B8%8C%EC%A1%B1%EB%B0%9C%28%EC%9D%B8%EC%8A%A4%ED%83%80%EA%B7%B8%EB%9E%A8ID_joossa_0515%29_%281%29.jpg?type=w1200",
     address: "서울특별시 용산구 이태원동 131-36",
     branch: null,
   },
@@ -35,7 +38,8 @@ const data = [
     area: "이태원",
     tel: "02-797-7122",
     category: "카스테라|대만",
-    image: "",
+    image:
+      "https://recipe1.ezmember.co.kr/cache/recipe/2016/03/04/2772b15a7f24108e89a827d95427c1181.jpg",
     address: "서울특별시 용산구 이태원동 56-13",
     branch: null,
   },
@@ -45,7 +49,8 @@ const data = [
     area: "이태원",
     tel: "02-796-2796",
     category: "매운냉면|냉면",
-    image: "",
+    image:
+      "https://s3-ap-northeast-1.amazonaws.com/dcreviewsresized/20200603070617_photo1_634977ae8ff0.jpg",
     address: "서울시 용산구 보광동 265-576",
     branch: "본점",
   },
