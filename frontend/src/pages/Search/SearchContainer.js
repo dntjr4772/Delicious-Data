@@ -6,6 +6,7 @@ import recommendData from "../../utils/data/recommendData";
 import PopupBox from "./components/PopupBox";
 import { useSelector } from "react-redux";
 import getWindowDimensions from "../../utils/hooks/getWindowDimensions";
+import bgLayout from "../../assets/bg/bg_layout.png";
 
 const Wrapper = styled.div`
   height: 100vh;
@@ -16,12 +17,11 @@ const Wrapper = styled.div`
 const Inner = styled.div`
   display: flex;
   position: relative;
-  justify-content: center;
-  align-items: center;
   width: 5000px;
-  height: 5000px;
+  height: 4000px;
   background-color: #fff7f1;
   overflow: "hidden";
+  background-image: url(${(props) => props.bgLayout});
 `;
 
 const Search = () => {
@@ -33,7 +33,7 @@ const Search = () => {
     setData(recommendData);
 
     const scroll_container = document.getElementById("container").parentElement;
-    scroll_container.scrollTo(2500 - windowWidth / 2, 2500 - windowHeight / 2);
+    scroll_container.scrollTo(2500 - windowWidth / 2, 2000 - windowHeight / 2);
     return;
   }, [data, windowWidth, windowHeight]);
 
@@ -43,7 +43,7 @@ const Search = () => {
       <ScrollContainer
         style={{ height: "100%", width: "100%", overflow: "auto" }}
       >
-        <Inner id="container">
+        <Inner bgLayout={bgLayout} id="container">
           {data.length === 30 && (
             <>
               <RecommendBox dataIndex={0} data={data[0]}></RecommendBox>
@@ -51,6 +51,31 @@ const Search = () => {
               <RecommendBox dataIndex={2} data={data[2]}></RecommendBox>
               <RecommendBox dataIndex={3} data={data[3]}></RecommendBox>
               <RecommendBox dataIndex={4} data={data[4]}></RecommendBox>
+              <RecommendBox dataIndex={5} data={data[5]}></RecommendBox>
+              <RecommendBox dataIndex={6} data={data[6]}></RecommendBox>
+              <RecommendBox dataIndex={7} data={data[7]}></RecommendBox>
+              <RecommendBox dataIndex={8} data={data[8]}></RecommendBox>
+              <RecommendBox dataIndex={9} data={data[9]}></RecommendBox>
+              <RecommendBox dataIndex={10} data={data[10]}></RecommendBox>
+              <RecommendBox dataIndex={11} data={data[11]}></RecommendBox>
+              <RecommendBox dataIndex={12} data={data[12]}></RecommendBox>
+              <RecommendBox dataIndex={13} data={data[13]}></RecommendBox>
+              <RecommendBox dataIndex={14} data={data[14]}></RecommendBox>
+              <RecommendBox dataIndex={15} data={data[15]}></RecommendBox>
+              <RecommendBox dataIndex={16} data={data[16]}></RecommendBox>
+              <RecommendBox dataIndex={17} data={data[17]}></RecommendBox>
+              <RecommendBox dataIndex={18} data={data[18]}></RecommendBox>
+              <RecommendBox dataIndex={19} data={data[19]}></RecommendBox>
+              <RecommendBox dataIndex={20} data={data[20]}></RecommendBox>
+              <RecommendBox dataIndex={21} data={data[21]}></RecommendBox>
+              <RecommendBox dataIndex={22} data={data[22]}></RecommendBox>
+              <RecommendBox dataIndex={23} data={data[23]}></RecommendBox>
+              <RecommendBox dataIndex={24} data={data[24]}></RecommendBox>
+              <RecommendBox dataIndex={25} data={data[25]}></RecommendBox>
+              <RecommendBox dataIndex={26} data={data[26]}></RecommendBox>
+              <RecommendBox dataIndex={27} data={data[27]}></RecommendBox>
+              <RecommendBox dataIndex={28} data={data[28]}></RecommendBox>
+              <RecommendBox dataIndex={29} data={data[29]}></RecommendBox>
             </>
           )}
         </Inner>
