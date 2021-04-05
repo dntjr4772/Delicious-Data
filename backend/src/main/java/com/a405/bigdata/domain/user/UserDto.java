@@ -14,11 +14,15 @@ public class UserDto {
     {
         private char gender;
         private int bornYear;
+        private String email;
+        private String nickname;
         public User toEntity()
         {
             return User.builder()
                     .gender(this.gender)
                     .bornYear(this.bornYear)
+                    .email(this.email)
+                    .nickname(this.nickname)
                     .build();
         }
     }

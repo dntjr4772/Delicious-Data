@@ -17,8 +17,8 @@ public class UserTest extends BaseDomainTest {
         //Given
         char gender = '남';
         int bornYear=1995;
-        String email="test@naver.com";
-        String nickname="우석";
+        String email="dntjr4772@nate.com";
+        String nickname="dd우석";
 
         User user = User.builder()
                 .gender(gender)

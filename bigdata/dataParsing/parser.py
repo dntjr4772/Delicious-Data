@@ -4,6 +4,7 @@ import os
 import shutil
 import sys
 import numpy as np
+import random
 
 DATA_DIR = "../data"
 DATA_FILE = os.path.join(DATA_DIR, "data.json")
@@ -20,12 +21,18 @@ store_columns = (
     "longitude",  # 음식점 경도
     "category",  # 음식점 카테고리
     "image", # 가게 이미지 크롤링한 url
+    "taste_avg", # 맛 평균 평점
+    "clean_avg", # 위생 평균 평점
+    "service_avg", # 서비스 평균 평점
+    "review_cnt" # 리뷰 갯수
 )
 
 review_columns = (
     "store_id",  # 음식점 고유번호 / 외래키 (store의 primary key)
     "user_id",  # 유저 고유번호   / 외래키 (user의 primary key)
-    "score",  # 평점
+    "taste",  # 맛 평점
+    "clean",  # 위생 평점
+    "service",  # 서비스 평점
     "content",  # 리뷰 내용
     "reg_time",  # 리뷰 등록 시간
 )
@@ -77,28 +84,23 @@ def import_data(data_path=DATA_FILE):
 
     for d in data:
 
-        categories = [c["category"] for c in d["category_list"]]
-        stores.append(
-            [
-                d["id"],
-                d["name"],
-                d["branch"],
-                d["area"],
-                d["tel"],
-                d["address"],
-                d["latitude"],
-                d["longitude"],
-                "|".join(categories),
-                "",
-            ]
-        )
+        tot_taste = 0
+        tot_clean = 0
+        tot_service = 0
 
         for review in d["review_list"]:
             r = review["review_info"]
             u = review["writer_info"]
 
+            clean = random.randrange(0,6)
+            service = random.randrange(0,6)
+
+            tot_taste += r["score"]
+            tot_clean += clean
+            tot_service += service
+
             reviews.append(
-                [d["id"], u["id"], r["score"], r["content"], r["reg_time"]]
+                [d["id"], u["id"], r["score"], clean, service, r["content"], r["reg_time"]]
             )
 
             user_email = str(u["id"]) + "@abcd.com"
@@ -131,6 +133,47 @@ def import_data(data_path=DATA_FILE):
                     bhour["etc"],
                 ]
             )
+
+        categories = [c["category"] for c in d["category_list"]]
+        if d["review_cnt"] == 0:
+            stores.append(
+                [
+                    d["id"],
+                    d["name"],
+                    d["branch"],
+                    d["area"],
+                    d["tel"],
+                    d["address"],
+                    d["latitude"],
+                    d["longitude"],
+                    "|".join(categories),
+                    "",
+                    0,
+                    0,
+                    0,
+                    d["review_cnt"]
+                ]
+            )
+        else:
+            stores.append(
+                [
+                    d["id"],
+                    d["name"],
+                    d["branch"],
+                    d["area"],
+                    d["tel"],
+                    d["address"],
+                    d["latitude"],
+                    d["longitude"],
+                    "|".join(categories),
+                    "",
+                    tot_taste/d["review_cnt"],
+                    tot_clean/d["review_cnt"],
+                    tot_service/d["review_cnt"],
+                    d["review_cnt"]
+                ]
+            )
+
 
     store_frame = pd.DataFrame(data=stores, columns=store_columns)
     review_frame = pd.DataFrame(data=reviews, columns=review_columns)
