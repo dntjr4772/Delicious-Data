@@ -136,3 +136,9 @@ print(imgUrl)
 # driver.close()
 ```
 
+```
+# 태그 이름 말고 xpath로 가져오기
+driver.find_element_by_xpath("/html/body/div[3]/div[2]/div/div[1]/div[1]/div[3]/div/div/div[2]/div[2]/ul/li[1]/div[1]/div[1]/a").click()
+time.sleep(2)
+```
+
