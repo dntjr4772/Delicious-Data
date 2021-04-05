@@ -1,7 +1,12 @@
 package com.a405.bigdata.service;
 
 import com.a405.bigdata.common.BaseMessage;
+import com.a405.bigdata.domain.bhours.Bhours;
 import com.a405.bigdata.domain.bhours.BhoursDto;
+import com.a405.bigdata.domain.menu.Menu;
+import com.a405.bigdata.domain.menu.MenuDto;
+import com.a405.bigdata.domain.review.Review;
+import com.a405.bigdata.domain.review.ReviewDto;
 import com.a405.bigdata.domain.store.Store;
 import com.a405.bigdata.domain.store.StoreDto;
 import com.a405.bigdata.domain.store.StoreRepository;
@@ -29,13 +34,26 @@ public class StoreService {
         List<StoreDto.StoreInfoResponse> storeDtoList=new ArrayList<>();
         for (Store store : storeList){
             System.out.println("store.getStoreName() = " + store.getStoreName());
-            System.out.println("store = " + store.getBhours().getEndTime());
             StoreDto.StoreInfoResponse storeInfoResponse=modelMapper.map(store, StoreDto.StoreInfoResponse.class);
-            storeInfoResponse.setHours(modelMapper.map(store.getBhours(), BhoursDto.hours.class));
+            //Bhour 세팅
+            List<BhoursDto.hours> hoursList=new ArrayList<>();
+            for(Bhours bhours : store.getBhours()) {
+                hoursList.add(modelMapper.map(bhours, BhoursDto.hours.class));
+                System.out.println("bhours.getStartTime() = " + bhours.getStartTime());
+            }
+            storeInfoResponse.setHours(hoursList);
+            //메뉴 세팅
+            List<MenuDto.ResponseMenu> menus=new ArrayList<>();
+            for (Menu menu : store.getMenus())
+                menus.add(modelMapper.map(menu,MenuDto.ResponseMenu.class));
+            storeInfoResponse.setMenus(menus);
+            //식당 리뷰 세팅
+            List<ReviewDto.ResponseReview> reviews=new ArrayList<>();
+            for (Review review : store.getReviews())
+                reviews.add(modelMapper.map(review,ReviewDto.ResponseReview.class));
+            storeInfoResponse.setReviews(reviews);
             storeDtoList.add(storeInfoResponse);
         }
-
         return new BaseMessage(HttpStatus.OK,storeDtoList);
-
     }
 }

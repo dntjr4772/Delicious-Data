@@ -27,15 +27,16 @@ public class Store {
     private String area;
     private String tel;
     private String address;
-//    private double latitude;
-//    private double longitude;
-    private Long latitude;
-    private Long longitude;
+    private double latitude;
+    private double longitude;
     private String image;
     private String category;
-    @OneToOne(mappedBy = "store")
-    private Bhours bhours;
-
+    @OneToMany(mappedBy = "store")
+    private List<Bhours> bhours;
+    private Double tasteAvg;
+    private Double cleanAvg;
+    private Double serviceAvg;
+    private int review_cnt;
     @Builder.Default
     @OneToMany(mappedBy = "store")
     private List<Menu> menus=new ArrayList<>();

@@ -2,10 +2,14 @@ package com.a405.bigdata.domain.store;
 
 import com.a405.bigdata.domain.bhours.Bhours;
 import com.a405.bigdata.domain.bhours.BhoursDto;
+import com.a405.bigdata.domain.menu.MenuDto;
+import com.a405.bigdata.domain.review.ReviewDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.List;
 
 public class StoreDto {
     @Data
@@ -35,10 +39,27 @@ public class StoreDto {
         private String area;
         private String tel;
         private String address;
-        private Long latitude;
-        private Long longitude;
+        private Double latitude;
+        private Double longitude;
         private String category;
         private String storeImage;
+    }
+
+    @Data
+    @NoArgsConstructor
+    @AllArgsConstructor
+    @Builder
+    public static class StoreWithDistance
+    {
+        private Long id;
+        private String storeName;
+        private String branch;
+        private String area;
+        private String tel;
+        private String address;
+        private String category;
+        private String storeImage;
+        private double distance;
     }
 
     @Data
@@ -53,11 +74,12 @@ public class StoreDto {
         private String area;
         private String tel;
         private String address;
-        private Long latitude;
-        private Long longitude;
+        private Double latitude;
+        private Double longitude;
         private String category;
         private String storeImage;
-        private BhoursDto.hours hours;
-
+        private List<BhoursDto.hours> hours;
+        private List<MenuDto.ResponseMenu> menus;
+        private List<ReviewDto.ResponseReview> reviews;
     }
 }

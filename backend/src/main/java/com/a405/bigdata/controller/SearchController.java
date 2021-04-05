@@ -22,4 +22,10 @@ public class SearchController {
         BaseMessage bm =searchService.search(name);
         return new ResponseEntity(bm,bm.getHttpStatus());
     }
+    //비로그인 상태
+    @GetMapping("/logout/location/{location}")
+    public ResponseEntity searchByLocation(@PathVariable String location){
+        BaseMessage bm =searchService.searchByLocation(location);
+        return new ResponseEntity(bm,bm.getHttpStatus());
+    }
 }

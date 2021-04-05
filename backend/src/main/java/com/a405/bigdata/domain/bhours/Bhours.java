@@ -34,6 +34,6 @@ public class Bhours {
     private Date endTime;
     @Column(columnDefinition = "TEXT")
     private String etc;
-    @OneToOne
+    @ManyToOne
     private Store store;
 }
