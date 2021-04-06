@@ -1,5 +1,5 @@
 import axios from "axios";
-import secrets from "../../secrets"
+// import secrets from "../../secrets"
 // import recommendData from "../utils/data/recommendData";
 // import detailData from "../utils/data/detailData";
 
@@ -7,50 +7,27 @@ import secrets from "../../secrets"
 //   return new Promise((resolve) => setTimeout(resolve, ms));
 // };
 
-const API_ROOT_URI = secrets.API_ROOT_URI
+// const API_ROOT_URI = secrets.API_ROOT_URI
 // const VIA_API = secrets.VIA_API
 
 export const GET_ONE_DETAIL = async (req) => {
-  let status = 0;
-  let data = [];
+  // let status = 0;
+  // let data = [];
 
-  await axios
+  const res = await axios
     .get("http://j4a405.p.ssafy.io:8080/api/search/logout/location/창천동")
-    .then((res) => {
-      status = res.status;
-      data = res.data.data;
-    });
-
-  return { status, data };
+  return { status: res.status, data:res.data.data };
 };
 
 export const SEARCH_RECOMMEND = async (req) => {
-  let status = 0;
-  let data = 
-
-  {
-    id: 0,
-    store_name : "",
-    area: "",
-    tel: "",
-    category: "",
-    image: "",
-    address: "",
-    branch: "",
-  };
 
   try {
-    await axios
-    .get(`${API_ROOT_URI}/api/search/logout/location/${req}`)
-    .then((res) => {
-      status = res.status;
-      data = res.data.data;
-    });
+    const res = await axios
+    // .get(`${API_ROOT_URI}/api/search/logout/location/${req}`)
+    .get(`http://j4a405.p.ssafy.io:8080/api/search/logout/location/${req}`)
+    return { status: res.status, data: res.data.data };
   } catch (error) {
-
   }
-
-  return { status, data };
 
   // if (!VIA_API) {
   //   try {

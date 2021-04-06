@@ -1,5 +1,5 @@
 import React from "react";
-import SearchBoxContainer from "../Home/searchbox/SearchBoxContainer"
+// import SearchBoxContainer from "../Home/searchbox/SearchBoxContainer"
 
 const Home = () => {
   return ( 
@@ -11,7 +11,7 @@ const Home = () => {
         placeholder="Search..."
         // onChange={this.handleChange}
       />
-    </div>;
+    </div>
   )
 };
 
