@@ -1,28 +1,33 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useFetch } from "react";
 import styled from "styled-components";
+import axios from 'axios';
 // import { useSelector } from "react-redux";
-
 // const API = ""
 
-const SearchBar = () => {
-
-  componentDidMount = () => {
-    fetch(API, {
-      method: "GET",
-    })
-    .then((response) => response.json())
-    .then((result) => {
-      this.setState({ restaurant: result, restaurantData: result });
-    });
+function SearchBar() {
+  const [searchbar, setSearchBar] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError]
+  
+  useEffect(() => {})
+  const fetchSearchBar = async () => {
+    try {
+      setError(null);
+      setSearchbar(null);
+      setLoading(true);
+      const response = await axios.get(
+        // '주소'
+      );
+      setSearchBar(response.data);
+    } catch (e) {
+      setError(e);
+    }
+    setLoading(false);
   };
+  fetchSearchBar();
+}, []);
 
-  searchRestaurant = (e) => {
-    this.setState({ userInput: e.target.value })
-  }
-
-  filterRestaurant = () => {
-    const filter
-  }
+const SearchBar = () => {
 
   return (
     <input
