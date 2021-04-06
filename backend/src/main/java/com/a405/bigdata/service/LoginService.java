@@ -107,7 +107,6 @@ public class LoginService {
             if(user.getRole().equals(Role.TEMPORARY)){
                 resultMap.put("first-login","true");
                 //temp-> cert
-                logger.info("처음으로 로그인된 계정입니다. 관심태그를 입력 받아야 합니다.");
                 user.changeRole(Role.CERTIFICATED);
             }
             resultMap.put("message","인증키가 일치합니다.");
