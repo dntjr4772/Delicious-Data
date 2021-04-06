@@ -2,18 +2,13 @@ import React from "react";
 import { connect } from "react-redux";
 import styled from "styled-components";
 import FoodExample from "../../../assets/icons/food_example.png";
+import GetWindowDimensions from "../../../utils/hooks/getWindowDimensions";
 import pos from "../../../utils/recommendPosition";
 
 const Wrapper = styled.div`
   position: absolute;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
   width: 460px;
   height: 460px;
-  background-color: #ed8e47;
-  border-radius: 20px;
   cursor: pointer;
   :hover {
     transform: translate(
@@ -22,12 +17,38 @@ const Wrapper = styled.div`
       )
       scale(1.02);
   }
+
   user-select: none;
 
   transform: translate(
     ${(props) => pos[props.dataIndex].x}px,
     ${(props) => pos[props.dataIndex].y}px
   );
+`;
+
+const Inner = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  border-radius: 20px;
+  background-color: #ed8e47;
+
+  transform: scale(
+    ${(props) =>
+      props.scrollPos.curScrollX < pos[props.dataIndex].x + 230 &&
+      props.scrollPos.curScrollY < pos[props.dataIndex].y + 230 &&
+      props.scrollPos.curScrollX >
+        pos[props.dataIndex].x - props.windowWidth + 230 &&
+      props.scrollPos.curScrollY >
+        pos[props.dataIndex].y - props.windowHeight + 230
+        ? 1
+        : 0}
+  );
+
+  transition: transform 0.3s;
 `;
 
 const TopDiv = styled.div`
@@ -181,8 +202,11 @@ const PhotoBox = styled.div`
   border-radius: 6px;
 `;
 
-let RecommendBox = ({ dataIndex, data, dispatch }) => {
-  const { store_name, category, image } = data;
+let RecommendBox = ({ dataIndex, data, scrollPos, dispatch }) => {
+  const { windowWidth, windowHeight } = GetWindowDimensions();
+  const { storeName, category, storeImage } = data;
+
+  const categoryText = category.replaceAll("|", " / ");
 
   let rank = "";
   if (dataIndex <= 8) {
@@ -197,36 +221,43 @@ let RecommendBox = ({ dataIndex, data, dispatch }) => {
 
   return (
     <Wrapper dataIndex={dataIndex} onClick={onClickHandler}>
-      <TopDiv>
-        <TopBox>
-          <TopHead>
-            <HeadLeft>
-              <CategoryBox>
-                <CategoryImg></CategoryImg>
-              </CategoryBox>
-              <RankBox>
-                <RankTop>추천</RankTop>
-                <RankBottom>{rank}</RankBottom>
-              </RankBox>
-            </HeadLeft>
-            <HeadRight>
-              <PlusBox>
-                <PlusVer></PlusVer>
-                <PlusHor></PlusHor>
-              </PlusBox>
-            </HeadRight>
-          </TopHead>
-          <TopInfo>
-            <TopTitle>{store_name}</TopTitle>
-            <TopDesc>{category}</TopDesc>
-          </TopInfo>
-        </TopBox>
-      </TopDiv>
-      <BottomDiv>
-        <PhotoDiv>
-          <PhotoBox image={image}></PhotoBox>
-        </PhotoDiv>
-      </BottomDiv>
+      <Inner
+        windowWidth={windowWidth}
+        windowHeight={windowHeight}
+        dataIndex={dataIndex}
+        scrollPos={scrollPos}
+      >
+        <TopDiv>
+          <TopBox>
+            <TopHead>
+              <HeadLeft>
+                <CategoryBox>
+                  <CategoryImg></CategoryImg>
+                </CategoryBox>
+                <RankBox>
+                  <RankTop>추천</RankTop>
+                  <RankBottom>{rank}</RankBottom>
+                </RankBox>
+              </HeadLeft>
+              <HeadRight>
+                <PlusBox>
+                  <PlusVer></PlusVer>
+                  <PlusHor></PlusHor>
+                </PlusBox>
+              </HeadRight>
+            </TopHead>
+            <TopInfo>
+              <TopTitle>{storeName}</TopTitle>
+              <TopDesc>{categoryText}</TopDesc>
+            </TopInfo>
+          </TopBox>
+        </TopDiv>
+        <BottomDiv>
+          <PhotoDiv>
+            <PhotoBox storeImage={storeImage}></PhotoBox>
+          </PhotoDiv>
+        </BottomDiv>
+      </Inner>
     </Wrapper>
   );
 };
