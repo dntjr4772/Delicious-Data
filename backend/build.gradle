@@ -58,7 +58,9 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-mail'
     //Geocoder
     implementation group: 'com.google.code.geocoder-java', name: 'geocoder-java', version: '0.16'
-
-
+    //httpclient
+    implementation 'org.apache.httpcomponents:httpclient:4.5'
+    //json
+    implementation 'org.json:json:20190722'
 }
 
