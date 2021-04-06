@@ -23,3 +23,14 @@ cur.close()
 conn.close()
 ```
 
+pickle 파일 읽어오기
+
+```
+import pickle 
+
+store_file = open("dump.pickle", "rb") 
+store = pickle.load(store_file) # store_file에 저장된 내용을 store 변수에 저장 
+#print(store)
+store_file.close()
+```
+
