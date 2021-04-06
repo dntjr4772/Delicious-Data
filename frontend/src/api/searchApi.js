@@ -26,7 +26,8 @@ export const SEARCH_RECOMMEND = async (req) => {
     // .get(`${API_ROOT_URI}/api/search/logout/location/${req}`)
     .get(`http://j4a405.p.ssafy.io:8080/api/search/logout/location/${req}`)
     return { status: res.status, data: res.data.data };
-  } catch (error) {
+  } catch (error) { 
+    
   }
 
   // if (!VIA_API) {
