@@ -4,7 +4,7 @@ import styled from "styled-components";
 import SearchBar from './components/SearchBar'
 import SearchLogo from './components/SearchLogo'
 
-const SearchBox = () => {
+const SearchBoxContainer = () => {
   return (
     <Wrapper>
       <LogoContainer>
@@ -15,7 +15,7 @@ const SearchBox = () => {
       </BarContainer>
     </Wrapper>
   )
-}
+};
 
 const Wrapper = styled.div`
   display: flex;
@@ -38,4 +38,4 @@ const BarContainer = styled.div`
   height: 50px;
 `;
 
-export default SearchBox
+export default SearchBoxContainer

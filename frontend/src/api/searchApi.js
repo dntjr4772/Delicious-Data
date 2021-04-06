@@ -1,9 +1,14 @@
 import axios from "axios";
+import secrets from "../../secrets"
+// import recommendData from "../utils/data/recommendData";
 // import detailData from "../utils/data/detailData";
 
 // const timeout = (ms) => {
 //   return new Promise((resolve) => setTimeout(resolve, ms));
 // };
+
+const API_ROOT_URI = secrets.API_ROOT_URI
+// const VIA_API = secrets.VIA_API
 
 export const GET_ONE_DETAIL = async (req) => {
   let status = 0;
@@ -18,3 +23,55 @@ export const GET_ONE_DETAIL = async (req) => {
 
   return { status, data };
 };
+
+export const SEARCH_RECOMMEND = async (req) => {
+  let status = 0;
+  let data = 
+
+  {
+    id: 0,
+    store_name : "",
+    area: "",
+    tel: "",
+    category: "",
+    image: "",
+    address: "",
+    branch: "",
+  };
+
+  try {
+    await axios
+    .get(`${API_ROOT_URI}/api/search/logout/location/${req}`)
+    .then((res) => {
+      status = res.status;
+      data = res.data.data;
+    });
+  } catch (error) {
+
+  }
+
+  return { status, data };
+
+  // if (!VIA_API) {
+  //   try {
+  //     await setTimeout(1000);
+  //     status = 200;
+  //     data = recommendData.data;
+  //   } catch (error) {
+
+  //   }
+  // } else {
+
+  //   try {
+  //     await axios
+  //       .get(`${API_ROOT_URI}/api/search/logout/location/${req}`)
+  //       .then((res) => {
+  //         status = res.status;
+  //         data = res.data.data
+  //       });
+  //   } catch (error) {
+
+  //   }
+  // }
+};
+

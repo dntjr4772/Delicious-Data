@@ -1,7 +1,18 @@
 import React from "react";
+import SearchBoxContainer from "../Home/searchbox/SearchBoxContainer"
 
 const Home = () => {
-  return <div>홈입니다.</div>;
+  return ( 
+    <div>
+      {/* <SearchBoxContainer>    
+      </SearchBoxContainer> */}
+      <input
+        type="text"
+        placeholder="Search..."
+        // onChange={this.handleChange}
+      />
+    </div>;
+  )
 };
 
 export default Home;
