@@ -49,7 +49,7 @@ public class StoreDto {
     @NoArgsConstructor
     @AllArgsConstructor
     @Builder
-    public static class StoreWithDistance
+    public static class SearchStoreResponse
     {
         private Long id;
         private String storeName;
@@ -59,7 +59,6 @@ public class StoreDto {
         private String address;
         private String category;
         private String storeImage;
-        private double distance;
     }
 
     @Data

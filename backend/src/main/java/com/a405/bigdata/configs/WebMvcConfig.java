@@ -10,7 +10,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
-                .allowedOrigins("http://localhost:3000", "http://localhost:8080", "http://118.34.136.73:8080", "http://i4a302.p.ssafy.io:3000","http://i4a302.p.ssafy.io:8080","https://i4a302.p.ssafy.io")
+                .allowedOrigins("http://localhost:3000", "http://localhost:8080", "http://118.34.136.73:8080", "http://j4a405.p.ssafy.io:3000","http://j4a405.p.ssafy.io:8080","https://j4a405.p.ssafy.io")
                 .allowedMethods(
                         HttpMethod.GET.name(),
                         HttpMethod.HEAD.name(),

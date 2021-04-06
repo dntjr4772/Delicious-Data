@@ -31,7 +31,7 @@ public class SearchControllerTest extends BaseControllerTest {
     @Test
     public void searchByLocation_동작_성공() throws Exception {
         //When
-        String location="대전광역시 유성구 궁동";
+        String location="창천동";
 
         mockMvc.perform(get("/api/search/logout/location/"+location)
                 .contentType(MediaType.APPLICATION_JSON))
