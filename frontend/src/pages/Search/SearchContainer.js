@@ -2,11 +2,12 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import RecommendBox from "./components/RecommendBox";
 import ScrollContainer from "react-indiana-drag-scroll";
-import recommendData from "../../utils/data/recommendData";
+// import recommendData from "../../utils/data/recommendData";
 import PopupBox from "./components/PopupBox";
 import { useSelector } from "react-redux";
 import getWindowDimensions from "../../utils/hooks/getWindowDimensions";
 import bgLayout from "../../assets/bg/bg_layout.png";
+import { GET_ONE_DETAIL } from "../../api/searchApi";
 
 const Wrapper = styled.div`
   height: 100vh;
@@ -28,14 +29,50 @@ const Search = () => {
   const { isPop, popIndex } = useSelector((state) => state.search);
   const [data, setData] = useState([]);
   const { windowWidth, windowHeight } = getWindowDimensions();
+  const [curScrollX, setCurScrollX] = useState(0);
+  const [curScrollY, setCurScrollY] = useState(0);
 
   useEffect(() => {
-    setData(recommendData);
+    const requestGetOneDetail = async () => {
+      const getResult = async () => {
+        return await GET_ONE_DETAIL();
+      };
+      const result = await getResult();
+      if (result.status === 200) {
+        console.log(result.data);
+        setData(result.data);
+      }
+    };
 
+    requestGetOneDetail();
+  }, []);
+
+  useEffect(() => {
     const scroll_container = document.getElementById("container").parentElement;
     scroll_container.scrollTo(2500 - windowWidth / 2, 2000 - windowHeight / 2);
     return;
-  }, [data, windowWidth, windowHeight]);
+  }, [windowWidth, windowHeight]);
+
+  useEffect(() => {
+    const scroll_container = document.getElementById("container").parentElement;
+
+    const setCurScrollPos = () => {
+      setCurScrollX(scroll_container.scrollLeft);
+      setCurScrollY(scroll_container.scrollTop);
+    };
+
+    setCurScrollPos();
+
+    scroll_container.addEventListener("scroll", setCurScrollPos);
+    return () => {
+      scroll_container.removeEventListener("scroll", setCurScrollPos);
+    };
+  });
+
+  // useEffect(() => {
+  //   console.log("x : " + curScrollX + ", y : " + curScrollY);
+  //   return;
+  // }, [curScrollX, curScrollY]);
 
   return (
     <Wrapper>
@@ -44,40 +81,15 @@ const Search = () => {
         style={{ height: "100%", width: "100%", overflow: "auto" }}
       >
         <Inner bgLayout={bgLayout} id="container">
-          {data.length === 30 && (
-            <>
-              <RecommendBox dataIndex={0} data={data[0]}></RecommendBox>
-              <RecommendBox dataIndex={1} data={data[1]}></RecommendBox>
-              <RecommendBox dataIndex={2} data={data[2]}></RecommendBox>
-              <RecommendBox dataIndex={3} data={data[3]}></RecommendBox>
-              <RecommendBox dataIndex={4} data={data[4]}></RecommendBox>
-              <RecommendBox dataIndex={5} data={data[5]}></RecommendBox>
-              <RecommendBox dataIndex={6} data={data[6]}></RecommendBox>
-              <RecommendBox dataIndex={7} data={data[7]}></RecommendBox>
-              <RecommendBox dataIndex={8} data={data[8]}></RecommendBox>
-              <RecommendBox dataIndex={9} data={data[9]}></RecommendBox>
-              <RecommendBox dataIndex={10} data={data[10]}></RecommendBox>
-              <RecommendBox dataIndex={11} data={data[11]}></RecommendBox>
-              <RecommendBox dataIndex={12} data={data[12]}></RecommendBox>
-              <RecommendBox dataIndex={13} data={data[13]}></RecommendBox>
-              <RecommendBox dataIndex={14} data={data[14]}></RecommendBox>
-              <RecommendBox dataIndex={15} data={data[15]}></RecommendBox>
-              <RecommendBox dataIndex={16} data={data[16]}></RecommendBox>
-              <RecommendBox dataIndex={17} data={data[17]}></RecommendBox>
-              <RecommendBox dataIndex={18} data={data[18]}></RecommendBox>
-              <RecommendBox dataIndex={19} data={data[19]}></RecommendBox>
-              <RecommendBox dataIndex={20} data={data[20]}></RecommendBox>
-              <RecommendBox dataIndex={21} data={data[21]}></RecommendBox>
-              <RecommendBox dataIndex={22} data={data[22]}></RecommendBox>
-              <RecommendBox dataIndex={23} data={data[23]}></RecommendBox>
-              <RecommendBox dataIndex={24} data={data[24]}></RecommendBox>
-              <RecommendBox dataIndex={25} data={data[25]}></RecommendBox>
-              <RecommendBox dataIndex={26} data={data[26]}></RecommendBox>
-              <RecommendBox dataIndex={27} data={data[27]}></RecommendBox>
-              <RecommendBox dataIndex={28} data={data[28]}></RecommendBox>
-              <RecommendBox dataIndex={29} data={data[29]}></RecommendBox>
-            </>
-          )}
+          {data.length === 30 &&
+            data.map((d, index) => (
+              <RecommendBox
+                key={index}
+                dataIndex={index}
+                data={d}
+                scrollPos={{ curScrollX, curScrollY }}
+              ></RecommendBox>
+            ))}
         </Inner>
       </ScrollContainer>
     </Wrapper>
