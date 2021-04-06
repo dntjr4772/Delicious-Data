@@ -9,8 +9,8 @@ const AppRouter = () => (
   <Switch>
     <Route exact path="/" component={Home} />
     <Route path="/home" component={Home} />
-    <Route path="/search" component={Search} />
-    {/* <Route path="/search/:location?" component={Search} /> */}
+    {/* <Route path="/search" component={Search} /> */}
+    <Route path="/search/:location?" component={Search} />
     {/* <Route path="/detail" component={Detail}/> */}
     {/* <Route path="/detail/:store_name?" component={Detail} /> */}
     <Route path="/lodaing" component={Loading}/>

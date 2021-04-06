@@ -16,7 +16,6 @@ const LogoBox = styled.div`
   display: flex;
   width: 300px;
   height: 200px;
-  background-color: gray;
 `;
 
 export default SearchLogo
