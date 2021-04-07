@@ -1,19 +1,17 @@
 import React from "react";
-import { connect } from "react-redux";
 import styled from "styled-components";
-import FoodExample from "../../../assets/icons/food_example.png";
 import GetWindowDimensions from "../../../utils/hooks/getWindowDimensions";
-import { pos } from "../../../utils/BoxPosition";
+import { yellowPos } from "../../../utils/BoxPosition";
 
 const Wrapper = styled.div`
   position: absolute;
-  width: 460px;
-  height: 460px;
+  width: 585px;
+  height: 210px;
   cursor: pointer;
   :hover {
     transform: translate(
-        ${(props) => pos[props.dataIndex].x}px,
-        ${(props) => pos[props.dataIndex].y}px
+        ${(props) => yellowPos[props.dataIndex].x}px,
+        ${(props) => yellowPos[props.dataIndex].y}px
       )
       scale(1.02);
   }
@@ -21,8 +19,8 @@ const Wrapper = styled.div`
   user-select: none;
 
   transform: translate(
-    ${(props) => pos[props.dataIndex].x}px,
-    ${(props) => pos[props.dataIndex].y}px
+    ${(props) => yellowPos[props.dataIndex].x}px,
+    ${(props) => yellowPos[props.dataIndex].y}px
   );
 `;
 
@@ -34,16 +32,16 @@ const Inner = styled.div`
   width: 100%;
   height: 100%;
   border-radius: 20px;
-  background-color: #ed8e47;
+  background-color: #ffdc32;
 
   transform: scale(
     ${(props) =>
-      props.scrollPos.curScrollX < pos[props.dataIndex].x + 190 &&
-      props.scrollPos.curScrollY < pos[props.dataIndex].y + 190 &&
+      props.scrollPos.curScrollX < yellowPos[props.dataIndex].x + 252 &&
+      props.scrollPos.curScrollY < yellowPos[props.dataIndex].y + 65 &&
       props.scrollPos.curScrollX >
-        pos[props.dataIndex].x - props.windowWidth + 190 &&
+        yellowPos[props.dataIndex].x - props.windowWidth + 252 &&
       props.scrollPos.curScrollY >
-        pos[props.dataIndex].y - props.windowHeight + 190
+        yellowPos[props.dataIndex].y - props.windowHeight + 65
         ? 1
         : 0}
   );
@@ -91,7 +89,7 @@ const CategoryBox = styled.div`
 `;
 
 const CategoryImg = styled.div`
-  background-image: url(${FoodExample});
+  background-image: url();
   background-size: contain;
   width: 50px;
   height: 50px;
@@ -202,21 +200,21 @@ const PhotoBox = styled.div`
   border-radius: 6px;
 `;
 
-let RecommendBox = ({ dataIndex, data, scrollPos, dispatch }) => {
+const YellowBox = ({ dataIndex, scrollPos }) => {
   const { windowWidth, windowHeight } = GetWindowDimensions();
-  const { storeName, category, storeImage } = data;
+  //   const { storeName, category, storeImage } = data;
 
-  const categoryText = category.replaceAll("|", " / ");
+  //   const categoryText = category.replaceAll("|", " / ");
 
-  let rank = "";
-  if (dataIndex <= 8) {
-    rank = "0" + (dataIndex + 1);
-  } else {
-    rank = dataIndex + 1;
-  }
+  //   let rank = "";
+  //   if (dataIndex <= 8) {
+  //     rank = "0" + (dataIndex + 1);
+  //   } else {
+  //     rank = dataIndex + 1;
+  //   }
 
   const onClickHandler = () => {
-    dispatch({ type: "TOGGLE_POPUP_BOX", dataIndex });
+    // dispatch({ type: "TOGGLE_POPUP_BOX", dataIndex });
   };
 
   return (
@@ -227,7 +225,7 @@ let RecommendBox = ({ dataIndex, data, scrollPos, dispatch }) => {
         dataIndex={dataIndex}
         scrollPos={scrollPos}
       >
-        <TopDiv>
+        {/* <TopDiv>
           <TopBox>
             <TopHead>
               <HeadLeft>
@@ -256,12 +254,10 @@ let RecommendBox = ({ dataIndex, data, scrollPos, dispatch }) => {
           <PhotoDiv>
             <PhotoBox storeImage={storeImage}></PhotoBox>
           </PhotoDiv>
-        </BottomDiv>
+        </BottomDiv> */}
       </Inner>
     </Wrapper>
   );
 };
 
-RecommendBox = connect()(RecommendBox);
-
-export default RecommendBox;
+export default YellowBox;
