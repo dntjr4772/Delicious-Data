@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import styled, { css, keyframes } from "styled-components";
 import close_1 from "../../../assets/icons/close_1.png";
+import { useHistory } from "react-router";
 
 const Wrapper = styled.div`
   z-index: 10;
@@ -175,14 +176,22 @@ const XButtonIcon = styled.div`
 
 let PopupBox = ({ data, dispatch }) => {
   const [isClick, setIsClick] = useState(false);
+  const [popupData, setPopupData] = useState();
+  const history = useHistory();
 
-  const { store_name, address, tel, image } = data;
+  useEffect(() => {
+    setPopupData(data);
+  }, [data]);
 
-  const onClickHandler = () => {
+  const onXButtonClickHandler = () => {
     setIsClick(false);
     setTimeout(() => {
       dispatch({ type: "TOGGLE_POPUP_BOX", dataIndex: -1 });
     }, 250);
+  };
+
+  const onDetailButtonClickHandler = () => {
+    history.push({ pathname: "/detail", state: { storeId: popupData.id } });
   };
 
   useEffect(() => {
@@ -192,23 +201,27 @@ let PopupBox = ({ data, dispatch }) => {
 
   return (
     <Wrapper isClick={isClick}>
-      <Inner isClick={isClick}>
-        <TopDiv>
-          <TitleBox>{store_name}</TitleBox>
-          <PhotoDiv>
-            <PhotoBox image={image}></PhotoBox>
-          </PhotoDiv>
-          <AddressBox>{address}</AddressBox>
-          <TelBox>TEL : {tel}</TelBox>
-        </TopDiv>
-        <BottomDiv>
-          <DetailButtonBox>자세히보기</DetailButtonBox>
-        </BottomDiv>
-        <XButtonBox onClick={onClickHandler}>
-          <XButtonIcon image={close_1}></XButtonIcon>
-        </XButtonBox>
-      </Inner>
-      <CloseBgDiv onClick={onClickHandler}></CloseBgDiv>
+      {popupData && popupData !== null && (
+        <Inner isClick={isClick}>
+          <TopDiv>
+            <TitleBox>{popupData.storeName}</TitleBox>
+            <PhotoDiv>
+              <PhotoBox image={popupData.image}></PhotoBox>
+            </PhotoDiv>
+            <AddressBox>{popupData.address}</AddressBox>
+            <TelBox>TEL : {popupData.tel}</TelBox>
+          </TopDiv>
+          <BottomDiv>
+            <DetailButtonBox onClick={onDetailButtonClickHandler}>
+              자세히보기
+            </DetailButtonBox>
+          </BottomDiv>
+          <XButtonBox onClick={onXButtonClickHandler}>
+            <XButtonIcon image={close_1}></XButtonIcon>
+          </XButtonBox>
+        </Inner>
+      )}
+      <CloseBgDiv onClick={onXButtonClickHandler}></CloseBgDiv>
     </Wrapper>
   );
 };

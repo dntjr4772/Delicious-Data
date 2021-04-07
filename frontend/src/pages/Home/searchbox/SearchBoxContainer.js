@@ -2,16 +2,18 @@ import React, { useState, useCallback } from "react";
 import { useHistory } from "react-router";
 import styled from "styled-components";
 // import { useSelector } from "react-redux";
-import SearchBar from './components/SearchBar'
-import SearchLogo from './components/SearchLogo'
-
-
+import SearchBar from "./components/SearchBar";
+import SearchLogo from "./components/SearchLogo";
 
 const SearchBoxContainer = () => {
   const history = useHistory();
-  const [location, setLocation]= useState('');
-  const handleChange = useCallback(({target:{value}})=>{setLocation(value)},[]);
-  const handleClick = useCallback(()=>{history.push(`/search/${location}`)},[location])
+  const [location, setLocation] = useState("");
+  const handleChange = useCallback(({ target: { value } }) => {
+    setLocation(value);
+  }, []);
+  const handleClick = () => {
+    history.push({ pathname: "/search", state: { term: location } });
+  };
 
   // handleClick() {
   //   this.setState(state => ({
@@ -25,16 +27,16 @@ const SearchBoxContainer = () => {
         <SearchLogo></SearchLogo>
       </LogoContainer>
       <BarContainer>
-          <input
-            type="text"
-            placeholder="Search..."
-            value={location}
-            onChange={handleChange}
-          />
-          <button onClick={handleClick}>검색</button>
+        <input
+          type="text"
+          placeholder="Search..."
+          value={location}
+          onChange={handleChange}
+        />
+        <button onClick={handleClick}>검색</button>
       </BarContainer>
     </Wrapper>
-  )
+  );
 };
 
 const Wrapper = styled.div`
@@ -57,4 +59,4 @@ const BarContainer = styled.div`
   height: 50px;
 `;
 
-export default SearchBoxContainer
+export default SearchBoxContainer;
