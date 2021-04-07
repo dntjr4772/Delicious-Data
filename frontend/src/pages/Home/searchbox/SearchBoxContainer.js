@@ -2,7 +2,7 @@ import React, { useState, useCallback } from "react";
 import { useHistory } from "react-router";
 import styled from "styled-components";
 // import { useSelector } from "react-redux";
-import SearchBar from "./components/SearchBar";
+// import SearchBar from "./components/SearchBar";
 import SearchLogo from "./components/SearchLogo";
 
 const SearchBoxContainer = () => {
