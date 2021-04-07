@@ -1,12 +1,12 @@
 import React from "react";
-import SearchBoxContainer from "../Home/searchbox/SearchBoxContainer"
+import SearchBoxContainer from "../Home/searchbox/SearchBoxContainer";
 
 const Home = () => {
-  return ( 
+  return (
     <div>
       <SearchBoxContainer></SearchBoxContainer>
     </div>
-  )
+  );
 };
 
 export default Home;

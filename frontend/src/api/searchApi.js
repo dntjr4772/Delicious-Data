@@ -7,49 +7,24 @@ import axios from "axios";
 //   return new Promise((resolve) => setTimeout(resolve, ms));
 // };
 
-// const API_ROOT_URI = secrets.API_ROOT_URI
-// const VIA_API = secrets.VIA_API
-
 export const GET_ONE_DETAIL = async (req) => {
-  // let status = 0;
-  // let data = [];
-
-  const res = await axios
-    .get("http://j4a405.p.ssafy.io:8080/api/search/logout/location/창천동")
-  return { status: res.status, data:res.data.data };
+  // 단일 식당 정보 요청 여기에 작성
+  // req => store id 로
 };
 
-export const SEARCH_RECOMMEND = async (req) => {
+export const GET_RECOMMEND_LIST = async (req) => {
+  let status = 0;
+  let data = [];
 
   try {
-    const res = await axios
-    // .get(`${API_ROOT_URI}/api/search/logout/location/${req}`)
-    .get(`http://j4a405.p.ssafy.io:8080/api/search/logout/location/${req}`)
-    return { status: res.status, data: res.data.data };
-  } catch (error) { 
-    
+    await axios
+      .get(`http://j4a405.p.ssafy.io:8080/api/search/logout/location/${req}`)
+      .then((res) => {
+        status = res.status;
+        data = res.data.data;
+      });
+  } catch (error) {
+    console.log(error.message);
   }
-
-  // if (!VIA_API) {
-  //   try {
-  //     await setTimeout(1000);
-  //     status = 200;
-  //     data = recommendData.data;
-  //   } catch (error) {
-
-  //   }
-  // } else {
-
-  //   try {
-  //     await axios
-  //       .get(`${API_ROOT_URI}/api/search/logout/location/${req}`)
-  //       .then((res) => {
-  //         status = res.status;
-  //         data = res.data.data
-  //       });
-  //   } catch (error) {
-
-  //   }
-  // }
+  return { status, data };
 };
-
