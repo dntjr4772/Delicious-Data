@@ -1,7 +1,12 @@
 import React from "react";
+import SearchBoxContainer from "../Home/searchbox/SearchBoxContainer"
 
 const Home = () => {
-  return <div>홈입니다.</div>;
+  return ( 
+    <div>
+      <SearchBoxContainer></SearchBoxContainer>
+    </div>
+  )
 };
 
 export default Home;

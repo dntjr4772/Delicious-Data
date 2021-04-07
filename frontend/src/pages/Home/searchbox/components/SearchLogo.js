@@ -6,14 +6,16 @@ import styled from "styled-components";
 const SearchLogo = () => {
   return (
     <div>
-      
+      {/* <Image/> */}
+      <LogoBox></LogoBox>
     </div>
   )
 }
 
 const LogoBox = styled.div`
   display: flex;
-  width:
+  width: 300px;
+  height: 200px;
 `;
 
 export default SearchLogo
