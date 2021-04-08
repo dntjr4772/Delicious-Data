@@ -41,20 +41,8 @@ const TermText = styled.div`
 
 const FilterTopBox = ({ text }) => {
   const { windowWidth, windowHeight } = GetWindowDimensions();
-  //   const { storeName, category, storeImage } = data;
 
-  //   const categoryText = category.replaceAll("|", " / ");
-
-  //   let rank = "";
-  //   if (dataIndex <= 8) {
-  //     rank = "0" + (dataIndex + 1);
-  //   } else {
-  //     rank = dataIndex + 1;
-  //   }
-
-  const onClickHandler = () => {
-    // dispatch({ type: "TOGGLE_POPUP_BOX", dataIndex });
-  };
+  const onClickHandler = () => {};
 
   return (
     <Wrapper onClick={onClickHandler}>

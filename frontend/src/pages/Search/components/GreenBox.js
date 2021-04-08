@@ -54,7 +54,7 @@ const PhotoBox = styled.div`
   width: 305px;
   height: 180px;
   background-image: url(${(props) => props.image});
-  background-size: cover;
+  background-size: contain;
   background-position: center;
   border-radius: 8px;
 `;
@@ -73,7 +73,7 @@ const GreenBox = ({ dataIndex, scrollPos }) => {
         scrollPos={scrollPos}
       >
         <PhotoDiv>
-          <PhotoBox></PhotoBox>
+          <PhotoBox image={greenPos[dataIndex].url}></PhotoBox>
         </PhotoDiv>
       </Inner>
     </Wrapper>
