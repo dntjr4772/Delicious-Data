@@ -26,10 +26,20 @@ public class Review {
     @Column(columnDefinition = "TEXT")
     private String content;
     private String reviewImage;
+    @CreationTimestamp
     @Temporal(TemporalType.TIMESTAMP)
     private Date regTime;
     @ManyToOne
     private Store store;
     @ManyToOne
     private User user;
+    public void addReviewStore(Store store){
+        this.store=store;
+        store.getReviews().add(this);
+    }
+
+    public void addReviewWriter(User user){
+        this.user=user;
+        user.getReviews().add(this);
+    }
 }

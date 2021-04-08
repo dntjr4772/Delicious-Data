@@ -39,6 +39,17 @@ public class SearchControllerTest extends BaseControllerTest {
                 .andDo(print());
     }
 
+    @Test
+    public void searchByReview_동작_성공() throws Exception {
+        //When
+        String location="창천동";
+
+        mockMvc.perform(get("/api/search/logout/review/"+location)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andDo(print());
+    }
+
 
 
 }

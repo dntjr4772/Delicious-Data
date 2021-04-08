@@ -36,7 +36,7 @@ public class Store {
     private Double tasteAvg;
     private Double cleanAvg;
     private Double serviceAvg;
-    private int review_cnt;
+    private int reviewCnt;
     @Builder.Default
     @OneToMany(mappedBy = "store")
     private List<Menu> menus=new ArrayList<>();
@@ -44,4 +44,11 @@ public class Store {
     @Builder.Default
     @OneToMany(mappedBy = "store")
     private List<Review> reviews=new ArrayList<>();
+
+    public void UpdateReview(Double tasteAvg, Double cleanAvg, Double serviceAvg){
+        this.tasteAvg=tasteAvg;
+        this.cleanAvg=cleanAvg;
+        this.serviceAvg=serviceAvg;
+        this.reviewCnt++;
+    }
 }

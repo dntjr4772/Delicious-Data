@@ -59,6 +59,9 @@ public class StoreDto {
         private String address;
         private String category;
         private String storeImage;
+        private Double tasteAvg;
+        private Double cleanAvg;
+        private Double serviceAvg;
     }
 
     @Data
@@ -77,6 +80,7 @@ public class StoreDto {
         private Double longitude;
         private String category;
         private String storeImage;
+        // TODO: 2021-04-06 리뷰 점수 3가지
         private List<BhoursDto.hours> hours;
         private List<MenuDto.ResponseMenu> menus;
         private List<ReviewDto.ResponseReview> reviews;
