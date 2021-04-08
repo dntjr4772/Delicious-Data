@@ -7,10 +7,15 @@ import styled from "styled-components"
 
 let Detail = () => {
   const [data, setData] = useState();
+  const [text, setText] = useState('');
   const location = useLocation();
   const storeId = location?.state?.storeId;
   // 가게 ID
   console.log(location.state.storeId);
+
+  const onChange = (e) => {
+    setText(e.target.value);
+  };
 
   useEffect(() => {
     const requestGetOneDetail = async () => {
@@ -30,48 +35,44 @@ let Detail = () => {
     return null;
   }
 
-  // 	https://map.kakao.com/link/map/위도,경도
-
-
-  // const { kakao } = window;
-
-  // const MapContainer = () => {
-  //   useEffect(() => {
-  //       const container = document.getElementById('myMap');
-	// 	            const options = {
-	// 		                  center: new kakao.maps.LatLng({latitude}, {longitude}),
-	// 		                  level: 3
-	// 	            };
-  //       const map = new kakao.maps.Map(container, options);
-  //   }, []);
-
   console.log(data);
     const {storeName, storeImage, menus, reviews, address, category, tel, area, latitude, longitude} = data;
   return (
-
     <Wrapper>
       <Container>
         {/* <MapContainer></MapContainer> */}
-        <div>식당 ID : {location.state.storeId}</div>
+        {/* <div>식당 ID : {location.state.storeId}</div> */}
         <NameBox>{storeName}</NameBox>
         <ImgDiv>
-          <ImgBox>storeImage</ImgBox>
+          <ImgBox image = {storeImage}>
+          </ImgBox>
         </ImgDiv>      
-        <AreaBox>{area}</AreaBox>
-        <AddressBox>{address}</AddressBox>
-        <div>{ latitude }{ longitude }</div>
-        <TelBox>TEL : {tel}</TelBox>
-        <CategoryBox>{category}</CategoryBox>
+        {/* <div>{ latitude }{ longitude }</div> */}
+        <AreaBox>{area} {category}</AreaBox>
+        <AddressBox>{address}<br/>TEL : {tel}</AddressBox>
+        {/* <TelBox>TEL : {tel}</TelBox> */}
+        {/* <CategoryBox>{category}</CategoryBox> */}
         <MenuBox>
           <p>menu</p>
           <ul>
-            {menus.map(({menuName, price})=><li>{menuName}: {price}</li>)}
+            {menus.map(({menuName, price}, index)=><li key={index}>{menuName}: {price}</li>)}
           </ul>
         </MenuBox>
+        <ReviewPost>
+          리뷰 작성하기
+          <ReviewForm>
+            <label>
+              <input type="text" name="content" style={{ width: "450px", height: "150px", borderRadius: "10px", border: "none"}} onChange={onChange} vaule={text} placeholer="리뷰를 작성해주세요"/>
+            </label>
+            <br/>
+            <input type="submit" value="submit" />
+          </ReviewForm>
+        </ReviewPost>
         <ReviewsBox>
-          <p>review</p>
+          <p>리뷰 보기</p>
+          <br/>
           <ul>
-            {reviews.map(({regTime, content})=><li>{regTime}: {content}</li>)}
+            {reviews.map(({regTime, content}, index)=><li key={index}>{regTime}: {content}</li>)}
           </ul>
         </ReviewsBox>
       </Container>
@@ -92,6 +93,7 @@ const Wrapper = styled.div`
 const Container = styled.div`
   display: flex;
   flex-direction: column;
+  align-items: center;
   justify-content: space-between;
   width: 600px;
   border-radius: 20px;
@@ -105,25 +107,29 @@ const Container = styled.div`
 const NameBox = styled.div`
   background-color: #ed8e47;
   color: white;
-  font-size: 30px;
+  font-size: 40px;
   font-weight: 300;
   display: flex;
   flex-direction: column;
   align-items: center;
   min-height: 50px;
+  width: 85%;
   padding: 10px;
+  margin: 20px;
+  border-radius: 20px;
 `;
 
 const ImgDiv = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 100%;
+  width: 90%;
   height: 300px;
   border-radius: 15px;
   border: 3px solid #ed8e47;
   background-color: white;
-  margin: 28px 0px;
+  margin: 28px 20px;
+  padding: 5px;
 `;
 
 const ImgBox = styled.div`
@@ -131,8 +137,8 @@ const ImgBox = styled.div`
   flex-direction: column;
   align-items: center;
   /* min-height: 50px; */
-  width: 330px;
-  height: 200px;
+  width: 100%;
+  height: 100%;
   background-image: url(${(props) => props.image});
   background-size: cover;
   background-position: center;
@@ -145,8 +151,12 @@ const AreaBox = styled.div`
   font-size: 20px;
   display: flex;
   flex-direction: column;
+  width: 85%;
   align-items: center;
-  min-height: 50px;
+  min-height: 30px;
+  margin: 20px;
+  border-radius: 20px;
+  padding: 10px;
 `;
 
 const AddressBox = styled.div`
@@ -157,6 +167,10 @@ const AddressBox = styled.div`
   flex-direction: column;
   align-items: center;
   min-height: 50px;
+  width: 85%;
+  margin: 20px;
+  border-radius: 20px;
+  padding: 10px;
 `;
 
 const TelBox = styled.div`
@@ -167,6 +181,10 @@ const TelBox = styled.div`
   flex-direction: column;
   align-items: center;
   min-height: 50px;
+  width: 85%;
+  margin: 20px;
+  border-radius: 20px;
+  padding: 10px;
 `;
 
 const CategoryBox = styled.div`
@@ -177,6 +195,11 @@ const CategoryBox = styled.div`
   flex-direction: column;
   align-items: center;
   min-height: 50px;
+  width: 85%;
+  margin: 20px;
+  border-radius: 20px;
+  padding: 10px;
+
 `;
 
 const MenuBox = styled.div`
@@ -187,6 +210,11 @@ const MenuBox = styled.div`
   flex-direction: column;
   align-items: center;
   min-height: 50px;
+  width: 85%;
+  margin: 20px;
+  border-radius: 20px;
+  padding: 10px;
+
 `;
 
 const ReviewsBox = styled.div`
@@ -197,4 +225,37 @@ const ReviewsBox = styled.div`
   flex-direction: column;
   align-items: center;
   min-height: 50px;
+  width: 85%;
+  margin: 20px;
+  border-radius: 20px;
+  padding: 10px;
+
+`;
+
+const ReviewPost = styled.div`
+  background-color: #ed8e47;
+  color: white;
+  font-size: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 50px;
+  width: 85%;
+  margin: 20px;
+  border-radius: 20px;
+  padding: 10px;
+
+`;
+
+const ReviewForm = styled.div`
+  background-color: #ed8e47;
+  font-size: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 50px;
+  width: 90%;
+  margin: 20px;
+  border-radius: 20px;
+  padding: 10px;
 `;
