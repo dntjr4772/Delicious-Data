@@ -12,6 +12,12 @@ import { GET_RECOMMEND_LIST } from "../../api/searchApi";
 import { yellowPos, greenPos } from "../../utils/BoxPosition";
 import YellowBox from "./components/YellowBox";
 import GreenBox from "./components/GreenBox";
+import CenterBox from "./components/CenterBox";
+import FilterBox from "./components/FilterBox";
+import FilterTopBox from "./components/FilterTopBox";
+import FixedBox from "./components/FixedBox";
+import HomeIcon from "../../assets/icons/home.png";
+import MenuIcon from "../../assets/icons/menu.png";
 
 const Wrapper = styled.div`
   height: 100vh;
@@ -91,6 +97,43 @@ let Search = () => {
         style={{ height: "100%", width: "100%", overflow: "auto" }}
       >
         <Inner bgLayout={bgLayout} id="container">
+          <FixedBox
+            image={HomeIcon}
+            handler={() => {
+              const scroll_container = document.getElementById("container")
+                .parentElement;
+              if (!scroll_container) {
+                return;
+              }
+              scroll_container.scrollTo({
+                top: 2500 - windowWidth / 2,
+                left: 2000 - windowHeight / 2,
+                behavior: "smooth",
+              });
+            }}
+            type={1}
+            text={"DD"}
+          ></FixedBox>
+          <FixedBox
+            image={MenuIcon}
+            handler={() => {
+              const scroll_container = document.getElementById("container")
+                .parentElement;
+              if (!scroll_container) {
+                return;
+              }
+              scroll_container.scrollTo({
+                top: 2500 - windowWidth / 2,
+                left: 2000 - windowHeight / 2,
+                behavior: "smooth",
+              });
+            }}
+            type={3}
+            text={""}
+          ></FixedBox>
+          <CenterBox></CenterBox>
+          <FilterBox></FilterBox>
+          <FilterTopBox text={location.state.term}></FilterTopBox>
           {data.length === 30 &&
             data.map((d, index) => (
               <RecommendBox
