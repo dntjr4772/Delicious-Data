@@ -2,7 +2,7 @@
 
 - java 설치
 - cd backend
-- java -jar ./build/libs/bigdata-0.0.1-SNAPSHOT.jar
+- java -jar bigdata-0.0.1-SNAPSHOT.jar
 
 ### 프론트엔드 실행
 
