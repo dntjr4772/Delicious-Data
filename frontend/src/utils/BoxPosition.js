@@ -124,7 +124,7 @@ export const yellowPos = [
     x: 125 + 20,
     y: 2875 + 20,
     url:
-      "https://lh3.googleusercontent.com/proxy/lxRtMN_wiYkVVP-QOv3ZjC2f5gG1RU8PivaevtVAjBqBIljUWQVc-B2z6xJo7myjXzVr6NqcOZmXsKSbquhXmBRvC6_EB7eXIwl1IS4JQXdhGrYGf4bgY43U578GueLwtDHDRD1xWb3FwV5zODnAJxDtQI7WQ7g5HTb25h9FYaFhKVHznJOrVl9E8kf_chhMeT3rilpkQ2c_qSdkc4nKuFjwuH7xEwVrBdd1Yi9KdMO6SHyI-Ls2LH4JyAV9vmIAK-thMFm4iPCzT0abg6wZOB_XEz8q1_wHkWVTwG8K5LhmmtGIJUz8pdeRqS6bdsCZAbVy",
+      "https://img1.daumcdn.net/thumb/R720x0.q80/?scode=mtistory2&fname=http%3A%2F%2Fcfile25.uf.tistory.com%2Fimage%2F234A753D54BF08D1284CBF",
   },
   {
     num: 7,
