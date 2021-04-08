@@ -206,7 +206,7 @@ let PopupBox = ({ data, dispatch }) => {
           <TopDiv>
             <TitleBox>{popupData.storeName}</TitleBox>
             <PhotoDiv>
-              <PhotoBox image={popupData.image}></PhotoBox>
+              <PhotoBox image={popupData.storeImage}></PhotoBox>
             </PhotoDiv>
             <AddressBox>{popupData.address}</AddressBox>
             <TelBox>TEL : {popupData.tel}</TelBox>

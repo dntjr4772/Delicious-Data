@@ -254,7 +254,7 @@ let RecommendBox = ({ dataIndex, data, scrollPos, dispatch }) => {
         </TopDiv>
         <BottomDiv>
           <PhotoDiv>
-            <PhotoBox storeImage={storeImage}></PhotoBox>
+            <PhotoBox image={storeImage}></PhotoBox>
           </PhotoDiv>
         </BottomDiv>
       </Inner>
