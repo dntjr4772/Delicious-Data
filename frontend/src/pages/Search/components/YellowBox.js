@@ -73,7 +73,7 @@ const YellowBox = ({ dataIndex, scrollPos }) => {
         scrollPos={scrollPos}
       >
         <PhotoDiv>
-          <PhotoBox></PhotoBox>
+          <PhotoBox image={yellowPos[dataIndex].url}></PhotoBox>
         </PhotoDiv>
       </Inner>
     </Wrapper>

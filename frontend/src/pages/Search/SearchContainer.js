@@ -3,7 +3,6 @@ import { useLocation } from "react-router-dom";
 import styled from "styled-components";
 import RecommendBox from "./components/RecommendBox";
 import ScrollContainer from "react-indiana-drag-scroll";
-// import recommendData from "../../utils/data/recommendData";
 import PopupBox from "./components/PopupBox";
 import { useSelector } from "react-redux";
 import getWindowDimensions from "../../utils/hooks/getWindowDimensions";
@@ -50,7 +49,6 @@ let Search = () => {
       const req = location.state.term;
       const result = await GET_RECOMMEND_LIST(req);
       if (result.status === 200) {
-        console.log(result.data);
         setData(result.data);
       }
     };
