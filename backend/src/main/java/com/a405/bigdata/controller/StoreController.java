@@ -17,7 +17,7 @@ public class StoreController {
 
     @GetMapping("/{storeid}")
     public ResponseEntity retrieveStore(@PathVariable Long storeid){
-        BaseMessage bm=storeService.retrieveStoreTest(storeid);
+        BaseMessage bm=storeService.retrieveStore(storeid);
         return new ResponseEntity(bm,bm.getHttpStatus());
     }
 }
