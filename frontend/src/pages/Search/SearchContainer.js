@@ -9,6 +9,15 @@ import { useSelector } from "react-redux";
 import getWindowDimensions from "../../utils/hooks/getWindowDimensions";
 import bgLayout from "../../assets/bg/bg_layout.png";
 import { GET_RECOMMEND_LIST } from "../../api/searchApi";
+import { yellowPos, greenPos } from "../../utils/BoxPosition";
+import YellowBox from "./components/YellowBox";
+import GreenBox from "./components/GreenBox";
+import CenterBox from "./components/CenterBox";
+import FilterBox from "./components/FilterBox";
+import FilterTopBox from "./components/FilterTopBox";
+import FixedBox from "./components/FixedBox";
+import HomeIcon from "../../assets/icons/home.png";
+import MenuIcon from "../../assets/icons/menu.png";
 
 const Wrapper = styled.div`
   height: 100vh;
@@ -30,6 +39,8 @@ let Search = () => {
   const { isPop, popIndex } = useSelector((state) => state.search);
   const { windowWidth, windowHeight } = getWindowDimensions();
   const [data, setData] = useState([]);
+  const [yellowData, setYellowData] = useState([]);
+  const [greenData, setGreenData] = useState([]);
   const [curScrollX, setCurScrollX] = useState(0);
   const [curScrollY, setCurScrollY] = useState(0);
   const location = useLocation();
@@ -46,6 +57,11 @@ let Search = () => {
 
     requestGetRecommendList();
   }, [location]);
+
+  useEffect(() => {
+    setYellowData(yellowPos);
+    setGreenData(greenPos);
+  }, []);
 
   useEffect(() => {
     const scroll_container = document.getElementById("container").parentElement;
@@ -81,6 +97,43 @@ let Search = () => {
         style={{ height: "100%", width: "100%", overflow: "auto" }}
       >
         <Inner bgLayout={bgLayout} id="container">
+          <FixedBox
+            image={HomeIcon}
+            handler={() => {
+              const scroll_container = document.getElementById("container")
+                .parentElement;
+              if (!scroll_container) {
+                return;
+              }
+              scroll_container.scrollTo({
+                top: 2500 - windowWidth / 2,
+                left: 2000 - windowHeight / 2,
+                behavior: "smooth",
+              });
+            }}
+            type={1}
+            text={"DD"}
+          ></FixedBox>
+          <FixedBox
+            image={MenuIcon}
+            handler={() => {
+              const scroll_container = document.getElementById("container")
+                .parentElement;
+              if (!scroll_container) {
+                return;
+              }
+              scroll_container.scrollTo({
+                top: 2500 - windowWidth / 2,
+                left: 2000 - windowHeight / 2,
+                behavior: "smooth",
+              });
+            }}
+            type={3}
+            text={""}
+          ></FixedBox>
+          <CenterBox></CenterBox>
+          <FilterBox></FilterBox>
+          <FilterTopBox text={location.state.term}></FilterTopBox>
           {data.length === 30 &&
             data.map((d, index) => (
               <RecommendBox
@@ -89,6 +142,24 @@ let Search = () => {
                 data={d}
                 scrollPos={{ curScrollX, curScrollY }}
               ></RecommendBox>
+            ))}
+          {yellowData.length === 8 &&
+            yellowData.map((yd, index) => (
+              <YellowBox
+                key={index}
+                dataIndex={index}
+                data={yd}
+                scrollPos={{ curScrollX, curScrollY }}
+              ></YellowBox>
+            ))}
+          {greenData.length === 7 &&
+            greenData.map((gd, index) => (
+              <GreenBox
+                key={index}
+                dataIndex={index}
+                data={gd}
+                scrollPos={{ curScrollX, curScrollY }}
+              ></GreenBox>
             ))}
         </Inner>
       </ScrollContainer>
