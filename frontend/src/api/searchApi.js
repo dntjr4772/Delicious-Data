@@ -42,3 +42,20 @@ export const GET_RECOMMEND_LIST = async (req) => {
   }
   return { status, data };
 };
+
+export const GET_DETAIL_MAP = async (req) => {
+  let status = 0;
+  let data = [];
+
+  try {
+    await axios
+      .get(`"//dapi.kakao.com/v2/maps/sdk.js?appkey=7fe544dfe742dea42f32c0720602698b${req}`)
+      .then((res) => {
+        status = res.status;
+        data = res.data.data;
+      });
+  } catch (error) {
+    console.log(error.message);
+  }
+  return { status, data };
+};
