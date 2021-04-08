@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import styled from "styled-components";
 import FoodExample from "../../../assets/icons/food_example.png";
 import GetWindowDimensions from "../../../utils/hooks/getWindowDimensions";
-import pos from "../../../utils/recommendPosition";
+import { pos } from "../../../utils/BoxPosition";
 
 const Wrapper = styled.div`
   position: absolute;
@@ -38,12 +38,12 @@ const Inner = styled.div`
 
   transform: scale(
     ${(props) =>
-      props.scrollPos.curScrollX < pos[props.dataIndex].x + 230 &&
-      props.scrollPos.curScrollY < pos[props.dataIndex].y + 230 &&
+      props.scrollPos.curScrollX < pos[props.dataIndex].x + 190 &&
+      props.scrollPos.curScrollY < pos[props.dataIndex].y + 190 &&
       props.scrollPos.curScrollX >
-        pos[props.dataIndex].x - props.windowWidth + 230 &&
+        pos[props.dataIndex].x - props.windowWidth + 190 &&
       props.scrollPos.curScrollY >
-        pos[props.dataIndex].y - props.windowHeight + 230
+        pos[props.dataIndex].y - props.windowHeight + 190
         ? 1
         : 0}
   );

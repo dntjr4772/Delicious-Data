@@ -1,13 +1,22 @@
 import React, { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
 import styled from "styled-components";
 import RecommendBox from "./components/RecommendBox";
 import ScrollContainer from "react-indiana-drag-scroll";
-// import recommendData from "../../utils/data/recommendData";
 import PopupBox from "./components/PopupBox";
 import { useSelector } from "react-redux";
 import getWindowDimensions from "../../utils/hooks/getWindowDimensions";
 import bgLayout from "../../assets/bg/bg_layout.png";
-import { GET_ONE_DETAIL } from "../../api/searchApi";
+import { GET_RECOMMEND_LIST } from "../../api/searchApi";
+import { yellowPos, greenPos } from "../../utils/BoxPosition";
+import YellowBox from "./components/YellowBox";
+import GreenBox from "./components/GreenBox";
+import CenterBox from "./components/CenterBox";
+import FilterBox from "./components/FilterBox";
+import FilterTopBox from "./components/FilterTopBox";
+import FixedBox from "./components/FixedBox";
+import HomeIcon from "../../assets/icons/home.png";
+import MenuIcon from "../../assets/icons/menu.png";
 
 const Wrapper = styled.div`
   height: 100vh;
@@ -25,37 +34,47 @@ const Inner = styled.div`
   background-image: url(${(props) => props.bgLayout});
 `;
 
-const Search = () => {
+let Search = () => {
   const { isPop, popIndex } = useSelector((state) => state.search);
-  const [data, setData] = useState([]);
   const { windowWidth, windowHeight } = getWindowDimensions();
+  const [data, setData] = useState([]);
+  const [yellowData, setYellowData] = useState([]);
+  const [greenData, setGreenData] = useState([]);
   const [curScrollX, setCurScrollX] = useState(0);
   const [curScrollY, setCurScrollY] = useState(0);
+  const location = useLocation();
 
   useEffect(() => {
-    const requestGetOneDetail = async () => {
-      const getResult = async () => {
-        return await GET_ONE_DETAIL();
-      };
-      const result = await getResult();
+    const requestGetRecommendList = async () => {
+      const req = location.state.term;
+      const result = await GET_RECOMMEND_LIST(req);
       if (result.status === 200) {
-        console.log(result.data);
         setData(result.data);
       }
     };
 
-    requestGetOneDetail();
+    requestGetRecommendList();
+  }, [location]);
+
+  useEffect(() => {
+    setYellowData(yellowPos);
+    setGreenData(greenPos);
   }, []);
 
   useEffect(() => {
     const scroll_container = document.getElementById("container").parentElement;
+    if (!scroll_container) {
+      return;
+    }
     scroll_container.scrollTo(2500 - windowWidth / 2, 2000 - windowHeight / 2);
-    return;
   }, [windowWidth, windowHeight]);
 
   useEffect(() => {
     const scroll_container = document.getElementById("container").parentElement;
 
+    if (!scroll_container) {
+      return;
+    }
     const setCurScrollPos = () => {
       setCurScrollX(scroll_container.scrollLeft);
       setCurScrollY(scroll_container.scrollTop);
@@ -69,11 +88,6 @@ const Search = () => {
     };
   });
 
-  // useEffect(() => {
-  //   console.log("x : " + curScrollX + ", y : " + curScrollY);
-  //   return;
-  // }, [curScrollX, curScrollY]);
-
   return (
     <Wrapper>
       {isPop && <PopupBox data={data[popIndex]}></PopupBox>}
@@ -81,6 +95,43 @@ const Search = () => {
         style={{ height: "100%", width: "100%", overflow: "auto" }}
       >
         <Inner bgLayout={bgLayout} id="container">
+          <FixedBox
+            image={HomeIcon}
+            handler={() => {
+              const scroll_container = document.getElementById("container")
+                .parentElement;
+              if (!scroll_container) {
+                return;
+              }
+              scroll_container.scrollTo({
+                top: 2500 - windowWidth / 2,
+                left: 2000 - windowHeight / 2,
+                behavior: "smooth",
+              });
+            }}
+            type={1}
+            text={"DD"}
+          ></FixedBox>
+          <FixedBox
+            image={MenuIcon}
+            handler={() => {
+              const scroll_container = document.getElementById("container")
+                .parentElement;
+              if (!scroll_container) {
+                return;
+              }
+              scroll_container.scrollTo({
+                top: 2500 - windowWidth / 2,
+                left: 2000 - windowHeight / 2,
+                behavior: "smooth",
+              });
+            }}
+            type={3}
+            text={""}
+          ></FixedBox>
+          <CenterBox></CenterBox>
+          <FilterBox></FilterBox>
+          <FilterTopBox text={location.state.term}></FilterTopBox>
           {data.length === 30 &&
             data.map((d, index) => (
               <RecommendBox
@@ -89,6 +140,24 @@ const Search = () => {
                 data={d}
                 scrollPos={{ curScrollX, curScrollY }}
               ></RecommendBox>
+            ))}
+          {yellowData.length === 8 &&
+            yellowData.map((yd, index) => (
+              <YellowBox
+                key={index}
+                dataIndex={index}
+                data={yd}
+                scrollPos={{ curScrollX, curScrollY }}
+              ></YellowBox>
+            ))}
+          {greenData.length === 7 &&
+            greenData.map((gd, index) => (
+              <GreenBox
+                key={index}
+                dataIndex={index}
+                data={gd}
+                scrollPos={{ curScrollX, curScrollY }}
+              ></GreenBox>
             ))}
         </Inner>
       </ScrollContainer>
