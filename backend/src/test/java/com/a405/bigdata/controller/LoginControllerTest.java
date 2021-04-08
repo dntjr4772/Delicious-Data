@@ -11,7 +11,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 public class LoginControllerTest extends BaseControllerTest {
-    String AuthKey = "vnxqm37a";
+    String AuthKey = "tgw31w3s";
     String email = "test@naver.com";
     UserDto.LoginRequest user = new UserDto.LoginRequest();
     //---------------------------------로그인-------------------------------------------

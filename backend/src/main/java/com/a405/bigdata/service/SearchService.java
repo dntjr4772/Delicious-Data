@@ -4,13 +4,7 @@ import com.a405.bigdata.common.BaseMessage;
 import com.a405.bigdata.domain.store.Store;
 import com.a405.bigdata.domain.store.StoreDto;
 import com.a405.bigdata.domain.store.StoreRepository;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.code.geocoder.Geocoder;
-import com.google.code.geocoder.GeocoderRequestBuilder;
-import com.google.code.geocoder.model.*;
 import lombok.RequiredArgsConstructor;
-import org.apache.commons.httpclient.HttpClient;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ResponseHandler;
 import org.apache.http.client.methods.HttpGet;
@@ -20,6 +14,11 @@ import org.apache.http.impl.client.HttpClientBuilder;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.modelmapper.ModelMapper;
+import org.python.core.PyArray;
+import org.python.core.PyFunction;
+import org.python.core.PyInteger;
+import org.python.core.PyObject;
+import org.python.util.PythonInterpreter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -39,6 +38,7 @@ public class SearchService {
     public static final Logger logger = LoggerFactory.getLogger(SearchService.class);
     private final StoreRepository storeRepository;
     private final ModelMapper modelMapper;
+    private PythonInterpreter interpreter;
     public BaseMessage search(String name){
         List<Store> list=storeRepository.findByStoreNameContaining(name);
         List<StoreDto.StoreResponse> dtoList=new ArrayList<>();
@@ -50,7 +50,6 @@ public class SearchService {
     public BaseMessage searchByLocation(String location){
         Double[] loc=geoCoding(location);
         if(loc!=null) {
-            System.out.println("location = " + loc[0] + " " + loc[1]);
             //Double[] loc={37.406284,127.116425};
             Pageable pageable = PageRequest.of(0, 30);
             Page<Store> stores = storeRepository.getNearByRestaurants(loc[0], loc[1], pageable);
@@ -59,6 +58,30 @@ public class SearchService {
                 StoreDto.SearchStoreResponse storeDto = modelMapper.map(store, StoreDto.SearchStoreResponse.class);
                 dtoList.add(storeDto);
             }
+            return new BaseMessage(HttpStatus.OK, dtoList);
+        }
+        return new BaseMessage(HttpStatus.BAD_REQUEST);
+    }
+
+
+    public BaseMessage searchByReview(String location) {
+        Double[] loc=geoCoding(location);
+        if(loc!=null) {
+            Pageable pageable = PageRequest.of(0, 30);
+            Page<Store> stores = storeRepository.getNearByRestaurants(loc[0], loc[1], pageable);
+            List<StoreDto.SearchStoreResponse> dtoList = new ArrayList<>();
+            for (Store store : stores) {
+                StoreDto.SearchStoreResponse storeDto = modelMapper.map(store, StoreDto.SearchStoreResponse.class);
+                dtoList.add(storeDto);
+            }
+            Collections.sort(dtoList, new Comparator<StoreDto.SearchStoreResponse>() {
+                @Override
+                public int compare(StoreDto.SearchStoreResponse o1, StoreDto.SearchStoreResponse o2) {
+                    Double a=o2.getServiceAvg()+ o2.getCleanAvg()+ o2.getTasteAvg();
+                    Double b=o1.getServiceAvg()+ o1.getCleanAvg()+ o1.getTasteAvg();
+                    return a.compareTo(b);
+                }
+            });
             return new BaseMessage(HttpStatus.OK, dtoList);
         }
         return new BaseMessage(HttpStatus.BAD_REQUEST);
@@ -99,34 +122,23 @@ public class SearchService {
         return loc;
     }
 
-
-//    public static Float[] geoCoding(String location) {
-//        if (location == null)
-//            return null;
-//        System.out.println("location = " + location);
-//        Geocoder geocoder = new Geocoder();
-//        // setAddress : 변환하려는 주소 (경기도 성남시 분당구 등)
-//        // setLanguate : 인코딩 설정
-//        GeocoderRequest geocoderRequest = new GeocoderRequestBuilder().setAddress(location).setLanguage("ko").getGeocoderRequest();
-//
-//        try {
-//            GeocodeResponse geocoderResponse = geocoder.geocode(geocoderRequest);
-//            System.out.println("geocoderResponse.getStatus() "+ geocoderResponse.getStatus());
-//            if (geocoderResponse.getStatus() == GeocoderStatus.OK & !geocoderResponse.getResults().isEmpty()) {
-//
-//                GeocoderResult geocoderResult=geocoderResponse.getResults().iterator().next();
-//                LatLng latitudeLongitude = geocoderResult.getGeometry().getLocation();
-//
-//                Float[] coords = new Float[2];
-//                coords[0] = latitudeLongitude.getLat().floatValue();
-//                coords[1] = latitudeLongitude.getLng().floatValue();
-//                return coords;
-//            }
-//        } catch (Exception ex) {
-//            ex.printStackTrace();
-//        }
-//        System.out.println("null!!!");
-//        return null;
-//    }
+    public BaseMessage searchByLocationWithLogin(String location) {
+        Double[] loc=geoCoding(location);
+        if(loc!=null) {
+            //Double[] loc={37.406284,127.116425};
+            Pageable pageable = PageRequest.of(0, 30);
+            Page<Store> stores = storeRepository.getNearByRestaurants(loc[0], loc[1], pageable);
+            List<Long> storeIdList = new ArrayList<>();
+            for (Store store : stores)
+                storeIdList.add(store.getId());
+            interpreter=new PythonInterpreter();
+            interpreter.execfile("src/main/python/userStoreMatrix.py");
+            PyFunction pyFunction=(PyFunction) interpreter.get("storeList",PyFunction.class);
+            PyObject pyObject=pyFunction.__call__((PyObject) storeIdList);
+            logger.info(pyObject.toString());
+            return new BaseMessage(HttpStatus.OK, pyObject.toString());
+        }
+        return new BaseMessage(HttpStatus.BAD_REQUEST);
+    }
 
 }

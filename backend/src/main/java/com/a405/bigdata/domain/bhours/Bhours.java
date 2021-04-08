@@ -1,6 +1,7 @@
 package com.a405.bigdata.domain.bhours;
 
 import com.a405.bigdata.domain.store.Store;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -34,6 +35,7 @@ public class Bhours {
     private Date endTime;
     @Column(columnDefinition = "TEXT")
     private String etc;
+    @JsonBackReference
     @ManyToOne
     private Store store;
 }

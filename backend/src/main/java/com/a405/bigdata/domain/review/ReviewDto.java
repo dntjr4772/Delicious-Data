@@ -17,11 +17,20 @@ public class ReviewDto {
     //리뷰 생성 요청
     public static class CreateReviewRequest
     {
+        private long userId;
+        private long storeId;
         private int taste;
         private int clean;
         private int service;
         private String content;
-
+        public Review toEntity(){
+            return Review.builder()
+                    .taste(taste)
+                    .clean(clean)
+                    .service(service)
+                    .content(content)
+                    .build();
+        }
     }
 
     @Data

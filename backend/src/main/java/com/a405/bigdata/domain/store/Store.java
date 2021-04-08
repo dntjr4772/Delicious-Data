@@ -4,6 +4,7 @@ import com.a405.bigdata.domain.bhours.Bhours;
 import com.a405.bigdata.domain.menu.Menu;
 import com.a405.bigdata.domain.review.Review;
 import com.a405.bigdata.domain.user.User;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -31,17 +32,50 @@ public class Store {
     private double longitude;
     private String image;
     private String category;
+    @JsonManagedReference
     @OneToMany(mappedBy = "store")
     private List<Bhours> bhours;
     private Double tasteAvg;
     private Double cleanAvg;
     private Double serviceAvg;
-    private int review_cnt;
+    private int reviewCnt;
+    @JsonManagedReference
     @Builder.Default
     @OneToMany(mappedBy = "store")
     private List<Menu> menus=new ArrayList<>();
 
+    @JsonManagedReference
     @Builder.Default
     @OneToMany(mappedBy = "store")
     private List<Review> reviews=new ArrayList<>();
+
+    public void UpdateReview(Double tasteAvg, Double cleanAvg, Double serviceAvg){
+        this.tasteAvg=tasteAvg;
+        this.cleanAvg=cleanAvg;
+        this.serviceAvg=serviceAvg;
+        this.reviewCnt++;
+    }
+
+    @Override
+    public String toString() {
+        return "Store{" +
+                "id=" + id +
+                ", storeName='" + storeName + '\'' +
+                ", branch='" + branch + '\'' +
+                ", area='" + area + '\'' +
+                ", tel='" + tel + '\'' +
+                ", address='" + address + '\'' +
+                ", latitude=" + latitude +
+                ", longitude=" + longitude +
+                ", image='" + image + '\'' +
+                ", category='" + category + '\'' +
+                ", bhours=" + bhours +
+                ", tasteAvg=" + tasteAvg +
+                ", cleanAvg=" + cleanAvg +
+                ", serviceAvg=" + serviceAvg +
+                ", reviewCnt=" + reviewCnt +
+                ", menus=" + menus +
+                ", reviews=" + reviews +
+                '}';
+    }
 }
