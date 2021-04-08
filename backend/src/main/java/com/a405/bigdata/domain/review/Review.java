@@ -2,6 +2,7 @@ package com.a405.bigdata.domain.review;
 
 import com.a405.bigdata.domain.store.Store;
 import com.a405.bigdata.domain.user.User;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -29,8 +30,10 @@ public class Review {
     @CreationTimestamp
     @Temporal(TemporalType.TIMESTAMP)
     private Date regTime;
+    @JsonBackReference
     @ManyToOne
     private Store store;
+
     @ManyToOne
     private User user;
     public void addReviewStore(Store store){
@@ -41,5 +44,18 @@ public class Review {
     public void addReviewWriter(User user){
         this.user=user;
         user.getReviews().add(this);
+    }
+
+    @Override
+    public String toString() {
+        return "Review{" +
+                "id=" + id +
+                ", taste=" + taste +
+                ", clean=" + clean +
+                ", service=" + service +
+                ", content='" + content + '\'' +
+                ", reviewImage='" + reviewImage + '\'' +
+                ", regTime=" + regTime +
+                '}';
     }
 }

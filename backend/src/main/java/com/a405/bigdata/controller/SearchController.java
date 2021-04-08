@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RestController;
 @Api
 public class SearchController {
     private final SearchService searchService;
-    // TODO: 2021-04-07  식당 이름으로 찾는 기능이었는데 사용안할듯
     //비로그인 상태
 //    @GetMapping("/logout/{name}")
 //    public ResponseEntity search(@PathVariable String name){
@@ -25,7 +24,7 @@ public class SearchController {
 //    }
 
     /**
-     * 위치로부터 가장 가까운 식당 30개 반환 (사용안할수도)
+     * 위치로부터 가장 가까운 식당 30개 반환
      * @param location
      * @ return 식당 30개
      */

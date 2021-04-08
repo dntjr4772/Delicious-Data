@@ -1,10 +1,8 @@
 package com.a405.bigdata.domain.menu;
 
 import com.a405.bigdata.domain.store.Store;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import lombok.*;
 
 import javax.persistence.*;
 
@@ -19,7 +17,16 @@ public class Menu {
     //store 다대일
     private String menuName;
     private int price;
+    @JsonBackReference
     @ManyToOne
     private Store store;
 
+    @Override
+    public String toString() {
+        return "Menu{" +
+                "id=" + id +
+                ", menuName='" + menuName + '\'' +
+                ", price=" + price +
+                '}';
+    }
 }

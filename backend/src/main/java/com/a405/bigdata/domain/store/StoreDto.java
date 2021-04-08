@@ -2,7 +2,9 @@ package com.a405.bigdata.domain.store;
 
 import com.a405.bigdata.domain.bhours.Bhours;
 import com.a405.bigdata.domain.bhours.BhoursDto;
+import com.a405.bigdata.domain.menu.Menu;
 import com.a405.bigdata.domain.menu.MenuDto;
+import com.a405.bigdata.domain.review.Review;
 import com.a405.bigdata.domain.review.ReviewDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -84,5 +86,27 @@ public class StoreDto {
         private List<BhoursDto.hours> hours;
         private List<MenuDto.ResponseMenu> menus;
         private List<ReviewDto.ResponseReview> reviews;
+    }
+
+    @Data
+    @NoArgsConstructor
+    @AllArgsConstructor
+    @Builder
+    public static class StoreInfoResponseTest
+    {
+        private Long id;
+        private String storeName;
+        private String branch;
+        private String area;
+        private String tel;
+        private String address;
+        private Double latitude;
+        private Double longitude;
+        private String category;
+        private String storeImage;
+        // TODO: 2021-04-06 리뷰 점수 3가지
+        private List<Bhours> hours;
+        private List<Menu> menus;
+        private List<Review> reviews;
     }
 }

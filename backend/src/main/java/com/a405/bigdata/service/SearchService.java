@@ -14,6 +14,11 @@ import org.apache.http.impl.client.HttpClientBuilder;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.modelmapper.ModelMapper;
+import org.python.core.PyArray;
+import org.python.core.PyFunction;
+import org.python.core.PyInteger;
+import org.python.core.PyObject;
+import org.python.util.PythonInterpreter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -33,6 +38,7 @@ public class SearchService {
     public static final Logger logger = LoggerFactory.getLogger(SearchService.class);
     private final StoreRepository storeRepository;
     private final ModelMapper modelMapper;
+    private PythonInterpreter interpreter;
     public BaseMessage search(String name){
         List<Store> list=storeRepository.findByStoreNameContaining(name);
         List<StoreDto.StoreResponse> dtoList=new ArrayList<>();
@@ -119,18 +125,20 @@ public class SearchService {
     public BaseMessage searchByLocationWithLogin(String location) {
         Double[] loc=geoCoding(location);
         if(loc!=null) {
-            System.out.println("location = " + loc[0] + " " + loc[1]);
             //Double[] loc={37.406284,127.116425};
             Pageable pageable = PageRequest.of(0, 30);
             Page<Store> stores = storeRepository.getNearByRestaurants(loc[0], loc[1], pageable);
             List<Long> storeIdList = new ArrayList<>();
             for (Store store : stores)
                 storeIdList.add(store.getId());
-
-            return new BaseMessage(HttpStatus.OK, storeIdList);
+            interpreter=new PythonInterpreter();
+            interpreter.execfile("src/main/python/userStoreMatrix.py");
+            PyFunction pyFunction=(PyFunction) interpreter.get("storeList",PyFunction.class);
+            PyObject pyObject=pyFunction.__call__((PyObject) storeIdList);
+            logger.info(pyObject.toString());
+            return new BaseMessage(HttpStatus.OK, pyObject.toString());
         }
         return new BaseMessage(HttpStatus.BAD_REQUEST);
     }
-
 
 }

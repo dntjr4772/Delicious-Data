@@ -60,5 +60,9 @@ dependencies {
     implementation 'org.apache.httpcomponents:httpclient:4.5'
     //json
     implementation 'org.json:json:20190722'
+    //jython
+    implementation group: 'org.python', name: 'jython-standalone', version: '2.7.0'
+
+
 }
 

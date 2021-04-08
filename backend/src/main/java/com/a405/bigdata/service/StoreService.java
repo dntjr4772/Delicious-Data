@@ -56,4 +56,15 @@ public class StoreService {
         }
         return new BaseMessage(HttpStatus.OK,storeDtoList);
     }
+
+    public BaseMessage retrieveStoreTest(Long storeId) {
+        List<Store> storeList=storeRepository.findAllJoinFetch(storeId);
+        List<StoreDto.StoreInfoResponseTest> storeDtoList=new ArrayList<>();
+        for (Store store : storeList){
+            StoreDto.StoreInfoResponseTest storeInfoResponse=modelMapper.map(store, StoreDto.StoreInfoResponseTest.class);
+            System.out.println("storeInfoResponse = " + storeInfoResponse);
+            storeDtoList.add(storeInfoResponse);
+        }
+        return new BaseMessage(HttpStatus.OK,storeDtoList);
+    }
 }
