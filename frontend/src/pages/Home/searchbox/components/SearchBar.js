@@ -1,10 +1,10 @@
-import axios from "axios";
-import React, { useEffect, useState, useCallback } from "react";
-import { Route, useLocation, useParams } from "react-router-dom";
+// import axios from "axios";
+// import React, { useEffect, useState, useCallback } from "react";
+// import { Route, useLocation, useParams } from "react-router-dom";
 // import styled from "styled-components";
-import { SEARCH_RECOMMEND } from '../../../../api/searchApi'
+// import { SEARCH_RECOMMEND } from '../../../../api/searchApi'
 // import { useSelector } from "react-redux";
-import queryString from "query-string"
+// import queryString from "query-string"
 // import qs from 'qs';
 
 function SearchTerm() {
