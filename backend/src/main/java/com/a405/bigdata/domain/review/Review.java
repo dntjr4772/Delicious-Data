@@ -3,6 +3,9 @@ package com.a405.bigdata.domain.review;
 import com.a405.bigdata.domain.store.Store;
 import com.a405.bigdata.domain.user.User;
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -17,6 +20,9 @@ import java.util.Date;
 @Getter
 @NoArgsConstructor @AllArgsConstructor
 @Builder
+//@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,
+//        property = "id")
+//@JsonIdentityReference(alwaysAsId = true)
 public class Review {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -30,10 +36,10 @@ public class Review {
     @CreationTimestamp
     @Temporal(TemporalType.TIMESTAMP)
     private Date regTime;
-    @JsonBackReference
+    //@JsonBackReference
     @ManyToOne
     private Store store;
-
+    //@JsonBackReference
     @ManyToOne
     private User user;
     public void addReviewStore(Store store){

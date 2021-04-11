@@ -12,7 +12,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class StoreControllerTest extends BaseControllerTest {
     @Test
     public void Store_조회_성공()  throws Exception {
-        Long storeid=86L;
+        //Long storeid=54377L;
+        Long storeid=356124L;
         mockMvc.perform(get("/api/store/"+storeid)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())

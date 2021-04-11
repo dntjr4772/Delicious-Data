@@ -14,6 +14,7 @@ import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.BeanUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
@@ -29,42 +30,70 @@ public class StoreService {
     private final StoreRepository storeRepository;
     private final ModelMapper modelMapper;
 
-    public BaseMessage retrieveStore(Long storeId) {
+    /**
+     * BeanUtils.copyProperties 사용했을때
+     */
+    public BaseMessage retrieveStore1(Long storeId) {
         List<Store> storeList=storeRepository.findAllJoinFetch(storeId);
         List<StoreDto.StoreInfoResponse> storeDtoList=new ArrayList<>();
+
         for (Store store : storeList){
-            System.out.println("store.getStoreName() = " + store.getStoreName());
-            StoreDto.StoreInfoResponse storeInfoResponse=modelMapper.map(store, StoreDto.StoreInfoResponse.class);
+            StoreDto.StoreInfoResponse storeInfoResponse=new StoreDto.StoreInfoResponse();
+            BeanUtils.copyProperties(store,storeInfoResponse);
+
             //Bhour 세팅
             List<BhoursDto.hours> hoursList=new ArrayList<>();
+            BhoursDto.hours hoursDto=new BhoursDto.hours();
             for(Bhours bhours : store.getBhours()) {
-                hoursList.add(modelMapper.map(bhours, BhoursDto.hours.class));
-                System.out.println("bhours.getStartTime() = " + bhours.getStartTime());
+                BeanUtils.copyProperties(bhours,hoursDto);
+                hoursList.add(hoursDto);
             }
-            storeInfoResponse.setHours(hoursList);
+            storeInfoResponse.setBhours(hoursList);
+
             //메뉴 세팅
             List<MenuDto.ResponseMenu> menus=new ArrayList<>();
-            for (Menu menu : store.getMenus())
-                menus.add(modelMapper.map(menu,MenuDto.ResponseMenu.class));
+
+            for (Menu menu : store.getMenus()) {
+                MenuDto.ResponseMenu menuDto=new MenuDto.ResponseMenu();
+                BeanUtils.copyProperties(menu,menuDto);
+                menus.add(menuDto);
+            }
             storeInfoResponse.setMenus(menus);
+
             //식당 리뷰 세팅
             List<ReviewDto.ResponseReview> reviews=new ArrayList<>();
-            for (Review review : store.getReviews())
-                reviews.add(modelMapper.map(review,ReviewDto.ResponseReview.class));
+
+            for (Review review : store.getReviews()) {
+                ReviewDto.ResponseReview reviewDto=new ReviewDto.ResponseReview();
+                BeanUtils.copyProperties(review,reviewDto);
+                reviews.add(reviewDto);
+            }
             storeInfoResponse.setReviews(reviews);
+            //최종 list에 넣기
             storeDtoList.add(storeInfoResponse);
         }
         return new BaseMessage(HttpStatus.OK,storeDtoList);
     }
 
-    public BaseMessage retrieveStoreTest(Long storeId) {
+    /**
+     * modelMapper 사용했을때
+     */
+    public BaseMessage retrieveStore2(Long storeId) {
         List<Store> storeList=storeRepository.findAllJoinFetch(storeId);
-        List<StoreDto.StoreInfoResponseTest> storeDtoList=new ArrayList<>();
+        List<StoreDto.StoreInfoResponse> storeDtoList=new ArrayList<>();
         for (Store store : storeList){
-            StoreDto.StoreInfoResponseTest storeInfoResponse=modelMapper.map(store, StoreDto.StoreInfoResponseTest.class);
-            System.out.println("storeInfoResponse = " + storeInfoResponse);
+            StoreDto.StoreInfoResponse storeInfoResponse=modelMapper.map(store, StoreDto.StoreInfoResponse.class);
             storeDtoList.add(storeInfoResponse);
         }
         return new BaseMessage(HttpStatus.OK,storeDtoList);
     }
+    /**
+     * @JsonManagedReference, @JsonBackReference 사용했을때
+     */
+    public BaseMessage retrieveStore3(Long storeId) {
+        List<Store> storeList=storeRepository.findAllJoinFetch(storeId);
+        return new BaseMessage(HttpStatus.OK,storeList);
+    }
+
+
 }
