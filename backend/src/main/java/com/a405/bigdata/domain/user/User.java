@@ -1,6 +1,8 @@
 package com.a405.bigdata.domain.user;
 
 import com.a405.bigdata.domain.review.Review;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.*;
 
 import javax.persistence.*;
@@ -11,6 +13,8 @@ import java.util.List;
 @Getter
 @NoArgsConstructor @AllArgsConstructor
 @Builder
+//@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,
+//        property = "id")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

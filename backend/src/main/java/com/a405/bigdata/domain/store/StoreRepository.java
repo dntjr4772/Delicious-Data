@@ -15,6 +15,9 @@ public interface StoreRepository extends PagingAndSortingRepository<Store,Long> 
     @Query("select s from Store s left join fetch s.bhours where s.id= :id")
     List<Store> findAllJoinFetch(Long id);
 
+    @Query("select s from Store s left join fetch s.bhours where s.id= :id")
+    List<StoreDto.StoreInfoResponse> findAllJoinFetch2(Long id);
+
     @Query(value = "SELECT *, (6371*acos(cos(radians(:lat))*cos(radians(s.latitude))*cos(radians(s.longitude) -radians(:lng))+sin(radians(:lat))*sin(radians(s.latitude)))) AS distance FROM store s HAVING distance <= 1 ORDER BY distance",
             countQuery = "SELECT count(*) FROM store s WHERE 6371*acos(cos(radians(:lat))*cos(radians(s.latitude))*cos(radians(s.longitude) -radians(:lng))+sin(radians(:lat))*sin(radians(s.latitude))) <= 1",
             nativeQuery = true)

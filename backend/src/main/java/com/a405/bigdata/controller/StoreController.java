@@ -15,9 +15,9 @@ public class StoreController {
     private final StoreService storeService;
     public static final Logger logger = LoggerFactory.getLogger(StoreController.class);
 
-    @GetMapping("/{storeid}")
-    public ResponseEntity retrieveStore(@PathVariable Long storeid){
-        BaseMessage bm=storeService.retrieveStore(storeid);
+    @GetMapping("/{storeId}")
+    public ResponseEntity retrieveStore(@PathVariable Long storeId){
+        BaseMessage bm=storeService.retrieveStore2(storeId);
         return new ResponseEntity(bm,bm.getHttpStatus());
     }
 }
