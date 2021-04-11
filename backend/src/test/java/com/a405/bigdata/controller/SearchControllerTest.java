@@ -16,7 +16,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 public class SearchControllerTest extends BaseControllerTest {
 
-
     @Test
     public void Search_동작_성공() throws Exception {
         //When
@@ -42,7 +41,7 @@ public class SearchControllerTest extends BaseControllerTest {
     @Test
     public void searchByReview_동작_성공() throws Exception {
         //When
-        String location="창천동";
+        String location="신촌동";
 
         mockMvc.perform(get("/api/search/logout/review/"+location)
                 .contentType(MediaType.APPLICATION_JSON))

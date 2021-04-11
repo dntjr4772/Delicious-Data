@@ -82,8 +82,7 @@ public class StoreDto {
         private Double longitude;
         private String category;
         private String storeImage;
-        // TODO: 2021-04-06 리뷰 점수 3가지
-        private List<BhoursDto.hours> hours;
+        private List<BhoursDto.hours> bhours;
         private List<MenuDto.ResponseMenu> menus;
         private List<ReviewDto.ResponseReview> reviews;
     }
@@ -104,7 +103,6 @@ public class StoreDto {
         private Double longitude;
         private String category;
         private String storeImage;
-        // TODO: 2021-04-06 리뷰 점수 3가지
         private List<Bhours> hours;
         private List<Menu> menus;
         private List<Review> reviews;

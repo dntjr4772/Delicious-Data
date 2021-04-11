@@ -35,7 +35,7 @@ public class Bhours {
     private Date endTime;
     @Column(columnDefinition = "TEXT")
     private String etc;
-    @JsonBackReference
+    //@JsonBackReference
     @ManyToOne
     private Store store;
 }

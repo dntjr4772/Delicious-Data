@@ -4,7 +4,10 @@ import com.a405.bigdata.domain.bhours.Bhours;
 import com.a405.bigdata.domain.menu.Menu;
 import com.a405.bigdata.domain.review.Review;
 import com.a405.bigdata.domain.user.User;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -19,6 +22,9 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+//@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,
+//        property = "id")
+//@JsonIdentityReference(alwaysAsId = true)
 public class Store {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -30,21 +36,22 @@ public class Store {
     private String address;
     private double latitude;
     private double longitude;
+    @Column(columnDefinition = "TEXT")
     private String image;
     private String category;
-    @JsonManagedReference
+    //@JsonManagedReference
     @OneToMany(mappedBy = "store")
     private List<Bhours> bhours;
     private Double tasteAvg;
     private Double cleanAvg;
     private Double serviceAvg;
     private int reviewCnt;
-    @JsonManagedReference
+    //@JsonManagedReference
     @Builder.Default
     @OneToMany(mappedBy = "store")
     private List<Menu> menus=new ArrayList<>();
 
-    @JsonManagedReference
+    //@JsonManagedReference
     @Builder.Default
     @OneToMany(mappedBy = "store")
     private List<Review> reviews=new ArrayList<>();
